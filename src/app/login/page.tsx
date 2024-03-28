@@ -8,8 +8,11 @@ import React from "react";
 const Page = () => {
     return <>
         <title>Login</title>
-        <DaisyUiBaseLayout theme={"dim"}>
+        {/* Base Layout */}
+        <DaisyUiBaseLayout>
+            {/* Content Page */}
             <LoginPage/>
+            {/* Footer */}
             <DaisyUiFooter/>
         </DaisyUiBaseLayout>
     </>
