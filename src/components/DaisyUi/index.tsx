@@ -1,4 +1,5 @@
-export { default as DaisyUiBaseLayout } from "@/components/DaisyUi/BaseLayout";
+export { default as DaisyUiBaseLayout } from "@/components/DaisyUi/Layout/BaseLayout";
+export { default as DaisyUiPageContentLayout } from "@/components/DaisyUi/Layout/PageContentLayout";
 
 export { default as DaisyUiButton } from "@/components/DaisyUi/Button";
 

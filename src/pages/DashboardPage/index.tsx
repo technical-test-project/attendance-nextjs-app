@@ -1,20 +1,22 @@
+import {DaisyUiButton} from "@/components/DaisyUi";
+import React from "react";
+
 const DashboardPage = () => {
 
     return (
-        <div className="min-h-screen container mx-auto py-12 px-8 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold mb-4">Dashboard Home</h1>
-
-            <div className="card card-compact w-1/3 bg-base-300 shadow-xl">
+        <>
+            <div className="card card-compact lg:w-1/2 bg-base-300 shadow-xl">
                 <div className="card-body">
-                    <h2 className="card-title">Shoes!</h2>
-                    <p>If a dog chews shoes whose shoes does he choose?</p>
-                    <div className="card-actions justify-end">
-                        <button className="btn btn-primary">Absen Sekarang</button>
+                    <h2 className="card-title">Welcome!</h2>
+                    <p className="my-4">Tetap terhubung dengan kehadiran Anda. Selamat datang di dashboard aplikasi
+                        Absensi kami!</p>
+                    <div className="card-actions justify-end py-4">
+                        <DaisyUiButton text="Absen Sekarang"/>
                     </div>
                 </div>
             </div>
 
-        </div>);
+        </>);
 };
 
 export default DashboardPage;

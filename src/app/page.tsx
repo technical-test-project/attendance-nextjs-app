@@ -1,6 +1,6 @@
 'use client'
 
-import {DaisyUiBaseLayout, DaisyUiFooter, DaisyUiNavbarSidebar} from "@/components/DaisyUi";
+import {DaisyUiBaseLayout, DaisyUiFooter, DaisyUiNavbarSidebar, DaisyUiPageContentLayout} from "@/components/DaisyUi";
 import DashboardPage from "@/pages/DashboardPage";
 import React from "react";
 
@@ -14,7 +14,9 @@ export default function Dashboard() {
             <DaisyUiNavbarSidebar/>
 
             {/* Content Page */}
-            <DashboardPage/>
+            <DaisyUiPageContentLayout titlePage={"Dashboard"}>
+                <DashboardPage/>
+            </DaisyUiPageContentLayout>
 
             {/* Footer */}
             <DaisyUiFooter/>
