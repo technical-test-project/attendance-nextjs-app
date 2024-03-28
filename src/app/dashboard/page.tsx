@@ -1,19 +1,25 @@
 'use client'
 
-import LoginPage from "@/pages/LoginPage";
-import DaisyUiBaseLayout from "@/components/DaisyUi/Layout";
-import DaisyUiFooter from "@/components/DaisyUi/Layout/Footer";
 import React from "react";
+import DashboardPage from "@/pages/DashboardPage";
+import { DaisyUiBaseLayout, DaisyUiNavbarSidebar, DaisyUiFooter } from "@/components/DaisyUi";
+
 
 const Page = () => {
     return <>
-        <title>Login</title>
+        <title>Dashboard</title>
         {/* Base Layout */}
         <DaisyUiBaseLayout>
+
+            {/* Navbar + Sidebar */}
+            <DaisyUiNavbarSidebar/>
+
             {/* Content Page */}
-            <LoginPage/>
+            <DashboardPage/>
+
             {/* Footer */}
             <DaisyUiFooter/>
+
         </DaisyUiBaseLayout>
     </>
 };

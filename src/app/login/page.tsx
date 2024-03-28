@@ -1,8 +1,7 @@
 'use client'
 
 import LoginPage from "@/pages/LoginPage";
-import DaisyUiBaseLayout from "@/components/DaisyUi/Layout";
-import DaisyUiFooter from "@/components/DaisyUi/Layout/Footer";
+import { DaisyUiBaseLayout, DaisyUiFooter } from "@/components/DaisyUi"
 import React from "react";
 
 const Page = () => {

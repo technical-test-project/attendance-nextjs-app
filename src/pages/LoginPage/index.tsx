@@ -1,7 +1,6 @@
 import {useRouter} from "next/navigation";
 import Image from "next/image";
-import DaisyUiButton from "@/components/DaisyUi/Action/Button";
-import DaisyUiTextInput from "@/components/DaisyUi/DataInput/TextInput";
+import { DaisyUiButton, DaisyUiTextInput } from "@/components/DaisyUi";
 
 const LoginPage = () => {
     const router = useRouter()
