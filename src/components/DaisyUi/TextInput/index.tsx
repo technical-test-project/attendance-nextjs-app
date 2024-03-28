@@ -1,6 +1,6 @@
 import React from "react";
 
-interface DaisyUiTextInputProps {
+interface Props {
     label: string
     type: string
     id: string
@@ -9,7 +9,7 @@ interface DaisyUiTextInputProps {
     onChange?: () => void
 }
 
-class DaisyUiTextInput extends React.Component<DaisyUiTextInputProps> {
+export default class Component extends React.Component<Props> {
     render() {
         return <>
             <div>
@@ -26,6 +26,4 @@ class DaisyUiTextInput extends React.Component<DaisyUiTextInputProps> {
         </>;
     }
 }
-
-export default DaisyUiTextInput
 

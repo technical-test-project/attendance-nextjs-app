@@ -1,12 +1,12 @@
 import React from "react";
 
-interface DaisyUiButtonProps {
+interface Props {
     text: string | undefined;
     type?: string;
     onClick?: () => void;
 }
 
-class DaisyUiButton extends React.Component<DaisyUiButtonProps> {
+export default class Component extends React.Component<Props> {
     render() {
         return <>
             <button
@@ -19,5 +19,3 @@ class DaisyUiButton extends React.Component<DaisyUiButtonProps> {
         </>
     }
 }
-
-export default DaisyUiButton

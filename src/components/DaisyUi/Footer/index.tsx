@@ -1,10 +1,10 @@
 import React from "react";
 
-interface DaisyUiFooterProps {
+interface Props {
     children?: React.ReactNode
 }
 
-class DaisyUiFooter extends React.Component<DaisyUiFooterProps> {
+export default class Component extends React.Component<Props> {
     render() {
         return <>
             <footer className="footer footer-center p-4 bg-base-300 text-base-content">
@@ -19,5 +19,5 @@ class DaisyUiFooter extends React.Component<DaisyUiFooterProps> {
     }
 }
 
-export default DaisyUiFooter
+
 

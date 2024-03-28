@@ -1,18 +1,16 @@
 import React from "react";
 
-interface DaisyUiBaseLayoutProps {
+interface Props {
     theme?: string
     children: React.ReactNode
 }
 
-const DaisyUiBaseLayout: React.FC<DaisyUiBaseLayoutProps> = (props: DaisyUiBaseLayoutProps) => {
-
-    return (
-        <main data-theme={props.theme ?? "dim"}>
-            {props.children}
-        </main>
-    )
+export default class Component extends React.Component<Props> {
+    render() {
+        return (
+            <main data-theme={this.props.theme ?? "dim"}>
+                {this.props.children}
+            </main>
+        )
+    }
 }
-
-export default DaisyUiBaseLayout
-
