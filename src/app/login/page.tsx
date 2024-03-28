@@ -4,7 +4,8 @@ import LoginPage from "@/pages/LoginPage";
 import { DaisyUiBaseLayout, DaisyUiFooter } from "@/components/DaisyUi"
 import React from "react";
 
-const Page = () => {
+
+export default function Login(){
     return <>
         <title>Login</title>
         {/* Base Layout */}
@@ -15,6 +16,4 @@ const Page = () => {
             <DaisyUiFooter/>
         </DaisyUiBaseLayout>
     </>
-};
-
-export default Page;
+}
