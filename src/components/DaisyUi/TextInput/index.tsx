@@ -11,7 +11,7 @@ interface Props {
     required?: boolean;
     onChange?: (e: any) => void;
 }
-export default function Component(props: Props) {
+export default function DaisyUiComponent(props: Props) {
     return <>
         <div>
             <label className="block mb-1" htmlFor={props.id}>{props.label}</label>

@@ -5,12 +5,10 @@ interface Props {
     children: React.ReactNode
 }
 
-export default class Component extends React.Component<Props> {
-    render() {
-        return (
-            <main data-theme={this.props.theme ?? "dim"}>
-                {this.props.children}
-            </main>
-        )
-    }
+export default function DaisyUiComponent(props: Props) {
+    return <>
+        <main data-theme={props.theme ?? "dim"}>
+            {props.children}
+        </main>
+    </>
 }

@@ -15,7 +15,7 @@ interface Props {
     onSubmit?: (e?: any) => void;
 }
 
-export default function Component (props: Props){
+export default function DaisyUiComponent(props: Props) {
 
     const dateRangeDefaultValue = props.dateRangeDefaultValue
 

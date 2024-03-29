@@ -13,22 +13,15 @@ const menuList = [{
     url: '/attendance'
 },]
 
-
-class MenuList extends React.Component {
-    render() {
-        return <ul className="mx-auto">
-            {
-                menuList.map((item, index) => (
-                    <li key={index} className="my-4 flex flex-row items-center">
-                        {item.icon}
-                        <Link href={item.url} className={"grid"}>
-                            <span className="text-sm text-white mt-1">{item.label}</span>
-                        </Link>
-                    </li>
-                ))
-            }
+export default function DaisyUiComponent() {
+    return <>
+        <ul className="mx-auto">
+            {menuList.map((item, index) => (<li key={index} className="my-4 flex flex-row items-center">
+                {item.icon}
+                <Link href={item.url} className={"grid"}>
+                    <span className="text-sm text-white mt-1">{item.label}</span>
+                </Link>
+            </li>))}
         </ul>
-    }
+    </>
 }
-
-export default MenuList

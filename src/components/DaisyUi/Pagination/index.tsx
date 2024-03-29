@@ -7,7 +7,7 @@ interface Props {
 }
 
 
-export default function Component(props: Props) {
+export default function DaisyUiComponent(props: Props) {
 
     let page = props.table.getState().pagination.pageIndex + 1
     let pageCount = props.table.getPageCount()

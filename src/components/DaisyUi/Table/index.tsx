@@ -8,8 +8,7 @@ interface Props {
     columns?: any
 }
 
-const Component = (props: Props) => {
-
+export default function DaisyUiComponent(props: Props) {
     const data = props.data
     const propsColumns: TableColumn[] = props.columns
     const columnHelper = createColumnHelper()
@@ -36,25 +35,25 @@ const Component = (props: Props) => {
     })
 
 
-    return (
+    return <>
         <div className="overflow-x-auto pt-8">
             <table className="table table-md table-pin-cols border-white w-full text-center">
                 <thead className="bg-base-100">
-                    {
-                        table.getHeaderGroups().map((headerGroup) => (
-                            <tr key={headerGroup.id}>
-                                {
-                                    headerGroup.headers.map((header) => (
-                                        <th key={header.id} className="capitalize px-3.5 text-sm">
-                                            {
-                                                flexRender(header.column.columnDef.header, header.getContext())
-                                            }
-                                        </th>
-                                    ))
-                                }
-                            </tr>
-                        ))
-                    }
+                {
+                    table.getHeaderGroups().map((headerGroup) => (
+                        <tr key={headerGroup.id}>
+                            {
+                                headerGroup.headers.map((header) => (
+                                    <th key={header.id} className="capitalize px-3.5 text-sm">
+                                        {
+                                            flexRender(header.column.columnDef.header, header.getContext())
+                                        }
+                                    </th>
+                                ))
+                            }
+                        </tr>
+                    ))
+                }
                 </thead>
                 <tbody>
                 {
@@ -79,7 +78,5 @@ const Component = (props: Props) => {
 
             <DaisyUiPagination table={table}/>
         </div>
-    )
+    </>
 }
-
-export default Component

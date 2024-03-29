@@ -7,7 +7,7 @@ interface Props {
     onClick?: () => void;
 }
 
-export default function Component (props: Props){
+export default function DaisyUiComponent(props: Props) {
 
     const defaultClassName = "btn bg-blue-500 hover:bg-blue-400 text-white"
     const className = props.className ? `${defaultClassName} ${props.className}` : defaultClassName
