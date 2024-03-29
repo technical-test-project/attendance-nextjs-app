@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {apiAttendances} from "@/api/attendances";
 import Helpers from "@/utils/helpers";
 
-const AttendancePage = () => {
+export default function AttendancePage() {
     const [data, setData] = useState<AttendanceGroupByDate[]>();
     const [columns, setColumns] = useState<TableColumn[]>()
 
@@ -40,7 +40,7 @@ const AttendancePage = () => {
     }
 
 
-    return (<>
+    return <>
         <div className="card card-compact bg-base-300 shadow-xl mb-6 p-4">
             <div className="card-body">
                 <h2 className="card-title">Welcome!</h2>
@@ -78,8 +78,5 @@ const AttendancePage = () => {
 
             </div>
         </div>
-
-    </>);
+    </>
 };
-
-export default AttendancePage;

@@ -9,7 +9,7 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
     const storageToken = storage.getToken()
     console.log(`storageToken : ${storageToken}`)
-    const token = 'oat_MQ.UE51ODAtV0xISndUUFZNZ0dCUC1BSzZvODQtVnExc2xENnBaVVJ3STUyMTkwNjYxNg'
+    const token = 'oat_Mg.TXU4ZU92cmxoR3FCa09KQzZQNlgxWHpBV1V1b1NrNlphVHlQQWJ5VDY4NDczMjgzMw'
 
     if (token) {
         config.headers['Authorization'] = `Bearer ${token}`;

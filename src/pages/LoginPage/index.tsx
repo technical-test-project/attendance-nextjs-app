@@ -1,11 +1,11 @@
 import {useRouter} from "next/navigation";
 import Image from "next/image";
-import { DaisyUiButton, DaisyUiTextInput } from "@/components/DaisyUi";
+import {DaisyUiButton, DaisyUiTextInput} from "@/components/DaisyUi";
 
-const LoginPage = () => {
+export default function LoginPage() {
     const router = useRouter()
 
-    return (
+    return <>
         <div className="min-h-screen flex items-center justify-center py-12 px-8 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
                 <div>
@@ -23,9 +23,9 @@ const LoginPage = () => {
                 </div>
                 <form className="mt-8 space-y-6">
                     <DaisyUiTextInput label={"Email"} type={"text"} id={"email"} placeholder={"Enter your email"}
-                           required/>
+                                      required/>
                     <DaisyUiTextInput label={"Password"} type={"password"} id={"password"} placeholder={"Your password"}
-                           required/>
+                                      required/>
 
                     <div className={"pt-5"}>
                         <DaisyUiButton
@@ -36,7 +36,6 @@ const LoginPage = () => {
                     </div>
                 </form>
             </div>
-        </div>);
-};
-
-export default LoginPage;
+        </div>
+    </>
+}
