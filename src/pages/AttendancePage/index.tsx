@@ -20,6 +20,7 @@ const AttendancePage = () => {
 
 
     const fetchData = async (startDate?: string, endDate?:string) => {
+        setLoading(true);
         try {
             const response = await apiAttendances({startDate: startDate, endDate: endDate})
             const mappingData = Helpers.attendanceGroupByDate(response.data)
@@ -66,7 +67,7 @@ const AttendancePage = () => {
                     dateRangeDefaultValue={{startDate: startDate, endDate: endDate}}
                     onStartDateChange={(e: any) => setStartDate(e.target.value)}
                     onEndDateChange={(e: any) => setEndDate(e.target.value)}
-                    onClick={() => fetchData(startDate, endDate)}
+                    onSubmit={() => fetchData(startDate, endDate)}
                 />
 
 

@@ -12,7 +12,7 @@ interface Props {
     dateRangeDefaultValue?: DateRangeDefaultValue | undefined;
     onStartDateChange?: (e?: any) => void;
     onEndDateChange?: (e?: any) => void;
-    onClick?: (e?: any) => void;
+    onSubmit?: (e?: any) => void;
 }
 
 export default function Component (props: Props){
@@ -33,7 +33,7 @@ export default function Component (props: Props){
                 defaultValue={dateRangeDefaultValue?.endDate}
                 onChange={props.onEndDateChange}/>
 
-            <DaisyUiButton text={props.buttonText ?? "Filter"} onClick={props.onClick}/>
+            <DaisyUiButton text={props.buttonText ?? "Filter"} onClick={props.onSubmit}/>
         </div>
     </>
 }
