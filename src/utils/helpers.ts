@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import 'dayjs/locale/id'
 
 export default class Helpers {
     static attendanceGroupByDate(array: Attendance[]): AttendanceGroupByDate[] {

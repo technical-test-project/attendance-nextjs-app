@@ -1,4 +1,4 @@
-import {DaisyUiTable} from "@/components/DaisyUi";
+import {DaisyUiDateRange, DaisyUiTable} from "@/components/DaisyUi";
 import React, {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import {apiAttendances} from "@/api/attendances";
@@ -8,17 +8,22 @@ const AttendancePage = () => {
     const router = useRouter()
     const [data, setData] = useState<AttendanceGroupByDate[]>();
     const [columns, setColumns] = useState<TableColumn[]>()
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const [startDate, setStartDate] = useState<any>(null)
+    const [endDate, setEndDate] = useState<any>(null)
+
 
     useEffect(() => {
         fetchData()
     }, [])
 
 
-    const fetchData = async () => {
+    const fetchData = async (startDate?: string, endDate?:string) => {
         try {
-            const response = await apiAttendances()
+            const response = await apiAttendances({startDate: startDate, endDate: endDate})
             const mappingData = Helpers.attendanceGroupByDate(response.data)
 
             setData(mappingData)
@@ -54,10 +59,22 @@ const AttendancePage = () => {
             <div className="card-body">
                 <h2 className="card-title">Daftar Kehadiran Anda</h2>
 
+                <p className="my-4 text-md">
+                    Daftar Kehadiran secara default ditampilkan pada bulan { Helpers.convertDate(new Date().toISOString(), 'MMMM YYYY') }
+                </p>
 
-                { !loading
+                <DaisyUiDateRange
+                    buttonText={"Tampilkan"}
+                    dateRangeDefaultValue={{startDate: startDate, endDate: endDate}}
+                    onStartDateChange={(e: any) => setStartDate(e.target.value)}
+                    onEndDateChange={(e: any) => setEndDate(e.target.value)}
+                    onClick={() => fetchData(startDate, endDate)}
+                />
+
+
+                {!loading
                     ? (<DaisyUiTable data={data} columns={columns}/>)
-                    : ( <span className="loading loading-spinner loading-lg mx-auto py-20"></span>)
+                    : (<span className="loading loading-spinner loading-lg mx-auto py-20"></span>)
                 }
 
             </div>

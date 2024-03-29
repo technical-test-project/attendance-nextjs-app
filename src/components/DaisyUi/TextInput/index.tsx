@@ -7,7 +7,7 @@ interface Props {
     min?: number;
     max?: number;
     placeholder?: string;
-    defaultValue?: string;
+    defaultValue?: string | number | readonly string[] | undefined;
     required?: boolean;
     onChange?: (e: any) => void;
 }
@@ -21,7 +21,7 @@ export default function Component(props: Props) {
                 type={props.type}
                 min={props.min}
                 max={props.max}
-                defaultValue={props.defaultValue}
+                defaultValue={props?.defaultValue}
                 placeholder={props.placeholder}
                 required={props.required}
                 onChange={props.onChange}
