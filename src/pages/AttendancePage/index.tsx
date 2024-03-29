@@ -1,11 +1,9 @@
 import {DaisyUiDateRange, DaisyUiTable} from "@/components/DaisyUi";
 import React, {useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
 import {apiAttendances} from "@/api/attendances";
 import Helpers from "@/utils/helpers";
 
 const AttendancePage = () => {
-    const router = useRouter()
     const [data, setData] = useState<AttendanceGroupByDate[]>();
     const [columns, setColumns] = useState<TableColumn[]>()
 
