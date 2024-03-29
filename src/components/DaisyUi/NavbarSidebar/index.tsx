@@ -1,11 +1,11 @@
 import React from "react";
 import Image from "next/image";
-import {ClipboardDocumentCheckIcon, HomeIcon} from "@heroicons/react/24/solid";
-import Link from "next/link";
+import MenuList from "@/components/DaisyUi/NavbarSidebar/menu";
 
 interface Props {
     children?: React.ReactNode
 }
+
 
 export default class Component extends React.Component<Props> {
     render() {
@@ -14,7 +14,8 @@ export default class Component extends React.Component<Props> {
             <div className="drawer">
                 <input id="my-drawer-3" type="checkbox" className="drawer-toggle"/>
                 <div className="drawer-content flex flex-col">
-                    {/* NavbarSidebar */}
+
+                    {/* Navbar */}
                     <div className="w-full navbar bg-base-300">
                         <div className="flex-none">
                             <label htmlFor="my-drawer-3" aria-label="open sidebar"
@@ -26,7 +27,7 @@ export default class Component extends React.Component<Props> {
                                 </svg>
                             </label>
                         </div>
-                        <div className="flex-1 px-2 mx-2">Attendance Next App</div>
+                        <div className="flex-1 px-2 mx-2 font-bold">Attendance Next App</div>
                         <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
@@ -70,20 +71,7 @@ export default class Component extends React.Component<Props> {
 
                         <div className="divider"></div>
 
-                        <ul className="mx-auto">
-                            <li className="my-4 flex flex-row items-center">
-                                <HomeIcon className="grid text-white h-1/6 w-1/6 pointer-events-none"/>
-                                <Link href={"/dashboard"} className={"grid"}>
-                                    <span className="text-sm text-white mt-1">Dashboard</span>
-                                </Link>
-                            </li>
-                            <li className="my-2 flex flex-row items-center">
-                                <ClipboardDocumentCheckIcon className="text-white h-1/6 w-1/6 pointer-events-none"/>
-                                <Link href={"/attendances"}>
-                                    <span className="text-sm text-white mt-1">Attendance</span>
-                                </Link>
-                            </li>
-                        </ul>
+                        <MenuList/>
 
                     </div>
                 </div>
