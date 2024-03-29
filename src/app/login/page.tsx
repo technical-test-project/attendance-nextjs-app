@@ -5,7 +5,7 @@ import { DaisyUiBaseLayout, DaisyUiFooter } from "@/components/DaisyUi"
 import React from "react";
 
 
-export default function Login(){
+export default function Page(){
     return <>
         <title>Login</title>
         {/* Base Layout */}

@@ -1,7 +1,10 @@
 import {DaisyUiButton} from "@/components/DaisyUi";
 import React from "react";
+import {useRouter} from "next/navigation";
 
 const DashboardPage = () => {
+
+    const router = useRouter()
 
     return (
         <>
@@ -11,7 +14,7 @@ const DashboardPage = () => {
                     <p className="my-4">Tetap terhubung dengan kehadiran Anda. Selamat datang di dashboard aplikasi
                         Absensi kami!</p>
                     <div className="card-actions justify-end py-4">
-                        <DaisyUiButton text="Absen Sekarang"/>
+                        <DaisyUiButton text="Absen Sekarang" onClick={() => router.push('/attendance')}/>
                     </div>
                 </div>
             </div>
