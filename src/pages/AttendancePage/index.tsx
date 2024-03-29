@@ -54,6 +54,7 @@ const AttendancePage = () => {
             <div className="card-body">
                 <h2 className="card-title">Daftar Kehadiran Anda</h2>
 
+
                 { !loading
                     ? (<DaisyUiTable data={data} columns={columns}/>)
                     : ( <span className="loading loading-spinner loading-lg mx-auto py-20"></span>)

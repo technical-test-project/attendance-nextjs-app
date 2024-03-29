@@ -28,7 +28,11 @@ const LoginPage = () => {
                            required/>
 
                     <div className={"pt-5"}>
-                        <DaisyUiButton type={"button"} text={"Sign In"} onClick={() => router.push('/')}/>
+                        <DaisyUiButton
+                            className={"btn-block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 "}
+                            type={"button"}
+                            text={"Sign In"}
+                            onClick={() => router.push('/')}/>
                     </div>
                 </form>
             </div>

@@ -4,16 +4,17 @@ import {DaisyUiPagination} from "@/components/DaisyUi";
 
 
 interface Props {
-    data?: any[];
-    columns?: TableColumn[]
+    data?: any;
+    columns?: any
 }
 
 const Component = (props: Props) => {
 
     const data = props.data
+    const propsColumns: TableColumn[] = props.columns
     const columnHelper = createColumnHelper()
 
-    const columns = props.columns?.map((column, index) => {
+    const columns: any = propsColumns?.map((column, index) => {
         return columnHelper.accessor(column.field, {
             cell: info => (
                 index == 0 ? (
