@@ -10,6 +10,8 @@ export default function AttendancePage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const [page, setPage] = useState<any>(null)
+    const [perPage, setPerPage] = useState<any>(null)
     const [startDate, setStartDate] = useState<any>(null)
     const [endDate, setEndDate] = useState<any>(null)
 
@@ -19,10 +21,10 @@ export default function AttendancePage() {
     }, [])
 
 
-    const fetchData = async (startDate?: string, endDate?:string) => {
+    const fetchData = async (queryParams: AttendanceQSInterface) => {
         setLoading(true);
         try {
-            const response = await apiAttendances({startDate: startDate, endDate: endDate})
+            const response = await apiAttendances(queryParams)
             const mappingData = Helpers.attendanceGroupByDate(response.data)
 
             setData(mappingData)
@@ -39,6 +41,20 @@ export default function AttendancePage() {
         }
     }
 
+    /**
+     * Handle Value Received From Child React
+     * @param obj
+     */
+    const handleValueReceivedFromPagination = (obj: object) => {
+        const key = Object.keys(obj)[0]
+        const value = Object.values(obj)[0]
+
+        switch (key) {
+            case 'page' : fetchData({startDate, endDate, page: value}); break;
+            case 'perPage' : fetchData({startDate, endDate, perPage: value}); break;
+        }
+    }
+
 
     return <>
         <div className="card card-compact bg-base-300 shadow-xl mb-6 p-4">
@@ -50,6 +66,10 @@ export default function AttendancePage() {
                     hari ini.
                     Terima kasih atas kerjasamanya!
                 </p>
+
+
+                <p>From Pagination Page : { page }</p>
+                <p>From Pagination Per Page : { perPage }</p>
 
             </div>
         </div>
@@ -67,12 +87,13 @@ export default function AttendancePage() {
                     dateRangeDefaultValue={{startDate: startDate, endDate: endDate}}
                     onStartDateChange={(e: any) => setStartDate(e.target.value)}
                     onEndDateChange={(e: any) => setEndDate(e.target.value)}
-                    onSubmit={() => fetchData(startDate, endDate)}
+                    onSubmit={() => fetchData({startDate, endDate})}
                 />
 
 
                 {!loading
-                    ? (<DaisyUiTable data={data} columns={columns}/>)
+                    ? (<DaisyUiTable data={data} columns={columns}
+                                     receivedValueFromChild={handleValueReceivedFromPagination}/>)
                     : (<span className="loading loading-spinner loading-lg mx-auto py-20"></span>)
                 }
 

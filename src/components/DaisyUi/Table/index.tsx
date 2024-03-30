@@ -5,7 +5,8 @@ import {DaisyUiPagination} from "@/components/DaisyUi";
 
 interface Props {
     data?: any;
-    columns?: any
+    columns?: any;
+    receivedValueFromChild: any
 }
 
 export default function DaisyUiComponent(props: Props) {
@@ -34,49 +35,50 @@ export default function DaisyUiComponent(props: Props) {
         getPaginationRowModel: getPaginationRowModel(),
     })
 
-
     return <>
         <div className="overflow-x-auto pt-8">
-            <table className="table table-md table-pin-cols border-white w-full text-center">
-                <thead className="bg-base-100">
-                {
-                    table.getHeaderGroups().map((headerGroup) => (
-                        <tr key={headerGroup.id}>
-                            {
-                                headerGroup.headers.map((header) => (
-                                    <th key={header.id} className="capitalize px-3.5 text-sm">
-                                        {
-                                            flexRender(header.column.columnDef.header, header.getContext())
-                                        }
-                                    </th>
-                                ))
-                            }
-                        </tr>
-                    ))
-                }
-                </thead>
-                <tbody>
-                {
-                    table.getRowModel().rows.length ? (
-                        table.getRowModel().rows.map((row, index) => (
-                            <tr key={row.id}>
+
+            <DaisyUiPagination table={table} receivedValueFromChild={props.receivedValueFromChild}>
+
+                <table className="table table-md table-pin-cols border-white w-full text-center">
+                    <thead className="bg-base-100">
+                    {
+                        table.getHeaderGroups().map((headerGroup) => (
+                            <tr key={headerGroup.id}>
                                 {
-                                    row.getVisibleCells().map((cell) => (
-                                        <td key={cell.id}>
+                                    headerGroup.headers.map((header) => (
+                                        <th key={header.id} className="capitalize px-3.5 text-sm">
                                             {
-                                                flexRender(cell.column.columnDef.cell, cell.getContext())
+                                                flexRender(header.column.columnDef.header, header.getContext())
                                             }
-                                        </td>
+                                        </th>
                                     ))
                                 }
                             </tr>
                         ))
-                    ) : null
-                }
-                </tbody>
-            </table>
-
-            <DaisyUiPagination table={table}/>
+                    }
+                    </thead>
+                    <tbody>
+                    {
+                        table.getRowModel().rows.length ? (
+                            table.getRowModel().rows.map((row, index) => (
+                                <tr key={row.id}>
+                                    {
+                                        row.getVisibleCells().map((cell) => (
+                                            <td key={cell.id}>
+                                                {
+                                                    flexRender(cell.column.columnDef.cell, cell.getContext())
+                                                }
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                            ))
+                        ) : null
+                    }
+                    </tbody>
+                </table>
+            </DaisyUiPagination>
         </div>
     </>
 }

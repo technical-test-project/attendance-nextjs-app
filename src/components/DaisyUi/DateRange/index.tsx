@@ -10,9 +10,9 @@ interface Props {
     buttonText?: string;
     className?: string;
     dateRangeDefaultValue?: DateRangeDefaultValue | undefined;
-    onStartDateChange?: (e?: any) => void;
-    onEndDateChange?: (e?: any) => void;
-    onSubmit?: (e?: any) => void;
+    onStartDateChange?: EventHandlerInterface;
+    onEndDateChange?: EventHandlerInterface;
+    onSubmit?: EventHandlerInterface;
 }
 
 export default function DaisyUiComponent(props: Props) {

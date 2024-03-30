@@ -6,10 +6,12 @@ const api = axios.create({
     baseURL: `http://localhost:3333/api/`,
 })
 
+const bearerToken = "oat_Mw.LWhEdGcwX21EYV82Y2w2RXdxVm1hbk4tMEZHbWt2TlRUbm4xbzJZbzEwMTAyNTYxMDU"
+
 api.interceptors.request.use((config) => {
-    const storageToken = storage.getToken()
-    console.log(`storageToken : ${storageToken}`)
-    const token = 'oat_Mg.TXU4ZU92cmxoR3FCa09KQzZQNlgxWHpBV1V1b1NrNlphVHlQQWJ5VDY4NDczMjgzMw'
+    storage.setToken(bearerToken)
+    const token = storage.getToken()
+    console.log(`storageToken : ${token}`)
 
     if (token) {
         config.headers['Authorization'] = `Bearer ${token}`;

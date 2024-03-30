@@ -7,9 +7,9 @@ interface Props {
     min?: number;
     max?: number;
     placeholder?: string;
-    defaultValue?: string | number | readonly string[] | undefined;
+    defaultValue?: string | number | undefined;
     required?: boolean;
-    onChange?: (e: any) => void;
+    onChange?: EventHandlerInterface;
 }
 export default function DaisyUiComponent(props: Props) {
     return <>

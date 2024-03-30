@@ -4,7 +4,7 @@ interface Props {
     text: string | undefined;
     className?: string
     type?: string;
-    onClick?: () => void;
+    onClick?: EventHandlerInterface;
 }
 
 export default function DaisyUiComponent(props: Props) {

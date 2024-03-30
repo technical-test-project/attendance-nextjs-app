@@ -1,13 +1,6 @@
 import api from "@/api/axios";
 
-interface Params {
-    page?: number;
-    perPage?: number;
-    startDate?: string;
-    endDate?: string;
-}
-
-export const apiAttendances = async (params: Params) : Promise<ResponseData> => {
+export const apiAttendances = async (params: AttendanceQSInterface) : Promise<ResponseData> => {
     const response = await api.get('/attendances', {
         params
     })
