@@ -1,4 +1,4 @@
-import api from "@/api/axios";
+import api from "@/lib/axios";
 
 export const apiAttendances = async (params: AttendanceQSInterface) : Promise<ResponseData> => {
     const response = await api.get('/attendances', {

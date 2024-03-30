@@ -1,11 +1,13 @@
-import api from "@/api/axios";
-import LoginDTO from "@/utils/dto/loginDTO";
+import api from "@/lib/axios";
 
 
-const apiLogin = async (loginDTO: LoginDTO) => {
-    const response = await api.post('/login', {
-        ...loginDTO
-    })
+interface LoginData {
+    email?: string | undefined;
+    password?: string | undefined;
+}
 
-    return response.data.data
+export const apiLogin = async (data: LoginData): Promise<ResponseData> => {
+    const response = await api.post('/login', data)
+
+    return response.data
 }

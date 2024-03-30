@@ -1,9 +1,21 @@
+'use client'
+
 import {useRouter} from "next/navigation";
 import Image from "next/image";
 import {DaisyUiButton, DaisyUiTextInput} from "@/components/DaisyUi";
+import {useState} from "react";
 
 export default function LoginPage() {
     const router = useRouter()
+    const [user, setUser] = useState({email: "", password: ""})
+
+    const handleInput = (e: any) => {
+        setUser((prev: any) => ({...prev, [e.target.id]:e.target.value}))
+    }
+
+    const handleSubmit = (e: any) => {
+        e.preventDefault()
+    }
 
     return <>
         <div className="min-h-screen flex items-center justify-center py-12 px-8 sm:px-6 lg:px-8">
@@ -23,14 +35,15 @@ export default function LoginPage() {
                 </div>
                 <form className="mt-8 space-y-6">
                     <DaisyUiTextInput label={"Email"} type={"text"} id={"email"} placeholder={"Enter your email"}
+                                      onChange={handleInput}
                                       required/>
                     <DaisyUiTextInput label={"Password"} type={"password"} id={"password"} placeholder={"Your password"}
+                                      onChange={handleInput}
                                       required/>
 
                     <div className={"pt-5"}>
                         <DaisyUiButton
                             className={"btn-block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 "}
-                            type={"button"}
                             text={"Sign In"}
                             onClick={() => router.push('/')}/>
                     </div>
