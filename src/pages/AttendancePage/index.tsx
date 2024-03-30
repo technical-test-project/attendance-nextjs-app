@@ -15,6 +15,7 @@ export default function AttendancePage() {
 
 
     useEffect(() => {
+        // @ts-ignore
         fetchData()
     }, [])
 
@@ -26,10 +27,12 @@ export default function AttendancePage() {
             const mappingData = Helpers.attendanceGroupByDate(response.data)
 
             setData(mappingData)
-            setColumns([{field: 'id', headerName: 'No'}, {
-                field: 'userName',
-                headerName: 'Nama Karyawan'
-            }, {field: 'clockInAt', headerName: 'Jam Masuk'}, {field: 'clockOutAt', headerName: 'Jam Pulang'},])
+            setColumns([
+                {field: 'id', headerName: 'No'},
+                {field: 'userName',headerName: 'Nama Karyawan'},
+                {field: 'clockInAt', headerName: 'Jam Masuk'}, 
+                {field: 'clockOutAt', headerName: 'Jam Pulang'},
+            ])
         } catch (e: any) {
             setError(e);
         } finally {
