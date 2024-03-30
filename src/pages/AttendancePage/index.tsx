@@ -1,5 +1,5 @@
-import {DaisyUiDateRange, DaisyUiTable} from "@/components/DaisyUi";
-import React, {useEffect, useState} from "react";
+import {DaisyUiDateRange, DaisyUiPagination, DaisyUiTable} from "@/components/DaisyUi";
+import React, {useEffect, useMemo, useState} from "react";
 import {apiAttendances} from "@/api/attendances";
 import Helpers from "@/utils/helpers";
 
@@ -10,8 +10,6 @@ export default function AttendancePage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const [page, setPage] = useState<any>(null)
-    const [perPage, setPerPage] = useState<any>(null)
     const [startDate, setStartDate] = useState<any>(null)
     const [endDate, setEndDate] = useState<any>(null)
 
@@ -28,30 +26,14 @@ export default function AttendancePage() {
             const mappingData = Helpers.attendanceGroupByDate(response.data)
 
             setData(mappingData)
-            setColumns([
-                {field: 'id', headerName: 'No'},
-                {field: 'userName', headerName: 'Nama Karyawan'},
-                {field: 'clockInAt', headerName: 'Jam Masuk'},
-                {field: 'clockOutAt', headerName: 'Jam Pulang'},
-            ])
+            setColumns([{field: 'id', headerName: 'No'}, {
+                field: 'userName',
+                headerName: 'Nama Karyawan'
+            }, {field: 'clockInAt', headerName: 'Jam Masuk'}, {field: 'clockOutAt', headerName: 'Jam Pulang'},])
         } catch (e: any) {
             setError(e);
         } finally {
             setLoading(false);
-        }
-    }
-
-    /**
-     * Handle Value Received From Child React
-     * @param obj
-     */
-    const handleValueReceivedFromPagination = (obj: object) => {
-        const key = Object.keys(obj)[0]
-        const value = Object.values(obj)[0]
-
-        switch (key) {
-            case 'page' : fetchData({startDate, endDate, page: value}); break;
-            case 'perPage' : fetchData({startDate, endDate, perPage: value}); break;
         }
     }
 
@@ -66,11 +48,6 @@ export default function AttendancePage() {
                     hari ini.
                     Terima kasih atas kerjasamanya!
                 </p>
-
-
-                <p>From Pagination Page : { page }</p>
-                <p>From Pagination Per Page : { perPage }</p>
-
             </div>
         </div>
 
@@ -79,7 +56,8 @@ export default function AttendancePage() {
                 <h2 className="card-title">Daftar Kehadiran Anda</h2>
 
                 <p className="my-4 text-md">
-                    Daftar Kehadiran secara default ditampilkan pada bulan { Helpers.convertDate(new Date().toISOString(), 'MMMM YYYY') }
+                    Daftar Kehadiran secara default ditampilkan pada
+                    bulan {Helpers.convertDate(new Date().toISOString(), 'MMMM YYYY')}
                 </p>
 
                 <DaisyUiDateRange
@@ -92,8 +70,7 @@ export default function AttendancePage() {
 
 
                 {!loading
-                    ? (<DaisyUiTable data={data} columns={columns}
-                                     receivedValueFromChild={handleValueReceivedFromPagination}/>)
+                    ? (<DaisyUiTable data={data} columns={columns}/>)
                     : (<span className="loading loading-spinner loading-lg mx-auto py-20"></span>)
                 }
 

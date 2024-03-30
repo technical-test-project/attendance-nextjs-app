@@ -6,7 +6,7 @@ const api = axios.create({
     baseURL: `http://localhost:3333/api/`,
 })
 
-const bearerToken = "oat_Mw.LWhEdGcwX21EYV82Y2w2RXdxVm1hbk4tMEZHbWt2TlRUbm4xbzJZbzEwMTAyNTYxMDU"
+const bearerToken = "oat_MQ.emtMYktvdDFUWldMZFNhUndKYlhzRWZPTnpiVVV2VzllZnA3UGpwejE0MTM2NjEyNTk"
 
 api.interceptors.request.use((config) => {
     storage.setToken(bearerToken)

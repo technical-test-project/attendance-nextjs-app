@@ -1,7 +1,8 @@
 import React from "react";
 
 interface Props {
-    values: number[];
+    value?: string
+    items: number[];
     className?: string;
     onChange?: EventHandlerInterface;
     onSelect?: EventHandlerInterface;
@@ -15,9 +16,10 @@ export default function DaisyUiComponent(props: Props) {
 
     return <>
         <select className={className}
+                value={props.value}
                 onChange={props.onChange}
                 onSelect={props.onSelect}>
-            {props.values.map((item, index) => (<option key={item}>{item}</option>))}
+            {props.items.map((item, index) => (<option key={item}>{item}</option>))}
         </select>
     </>;
 }

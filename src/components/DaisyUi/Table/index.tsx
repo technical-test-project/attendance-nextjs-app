@@ -1,15 +1,27 @@
-import {createColumnHelper, getCoreRowModel, getPaginationRowModel} from "@tanstack/table-core";
+import {
+    createColumnHelper,
+    getCoreRowModel,
+    getFilteredRowModel,
+    getPaginationRowModel,
+    Table
+} from "@tanstack/table-core";
 import {flexRender, useReactTable} from "@tanstack/react-table";
-import {DaisyUiPagination} from "@/components/DaisyUi";
+import {DaisyUiPagination, DaisyUiTextInput} from "@/components/DaisyUi";
+import React, {useEffect, useState} from "react";
 
 
 interface Props {
     data?: any;
     columns?: any;
-    receivedValueFromChild: any
 }
 
 export default function DaisyUiComponent(props: Props) {
+    const [globalFilter, setGlobalFilter] = useState('')
+
+    useEffect(() => {
+        setGlobalFilter(globalFilter)
+    })
+
     const data = props.data
     const propsColumns: TableColumn[] = props.columns
     const columnHelper = createColumnHelper()
@@ -31,15 +43,27 @@ export default function DaisyUiComponent(props: Props) {
     const table = useReactTable({
         data,
         columns,
+        state: {
+            globalFilter
+        },
         getCoreRowModel:getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        manualPagination: false,
     })
+
+    /**
+     * Handle Set Global Filter Value form child
+     * @param value
+     */
+    const handleSetGlobalFilterValue = (value:string) => {
+        setGlobalFilter(value)
+    }
 
     return <>
         <div className="overflow-x-auto pt-8">
 
-            <DaisyUiPagination table={table} receivedValueFromChild={props.receivedValueFromChild}>
-
+            <DaisyUiPagination table={table} globalFilterValue={globalFilter} onChange={handleSetGlobalFilterValue}>
                 <table className="table table-md table-pin-cols border-white w-full text-center">
                     <thead className="bg-base-100">
                     {
