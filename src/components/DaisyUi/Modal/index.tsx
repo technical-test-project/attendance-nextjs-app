@@ -18,8 +18,8 @@ interface Props {
     className?: string;
     title?: string;
     message?: string;
-    onConfirm?: EventHandlerInterface;
-    onClose?: EventHandlerInterface;
+    onConfirm: EventHandlerInterface;
+    onClose: EventHandlerInterface;
     options?: Options;
 }
 
