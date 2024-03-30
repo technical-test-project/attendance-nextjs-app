@@ -6,7 +6,7 @@ import {ClipboardDocumentCheckIcon, HomeIcon} from "@heroicons/react/24/solid";
 const menuList = [{
     icon: <HomeIcon className="grid text-white h-1/6 w-1/6 pointer-events-none"/>,
     label: 'Dashboard',
-    url: '/'
+    url: '/dashboard'
 }, {
     icon: <ClipboardDocumentCheckIcon className="grid text-white h-1/6 w-1/6 pointer-events-none"/>,
     label: 'Attendance',
