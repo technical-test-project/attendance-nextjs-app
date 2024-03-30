@@ -3,24 +3,39 @@
 import {useRouter} from "next/navigation";
 import Image from "next/image";
 import {DaisyUiButton, DaisyUiTextInput} from "@/components/DaisyUi";
-import {useState} from "react";
+import React, {useState} from "react";
 import {apiLogin} from "@/api/login";
+import StorageManager from "@/utils/storageManager";
 
 export default function LoginPage() {
     const router = useRouter()
     const [user, setUser] = useState({email: "", password: ""})
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleInput = (e: any) => {
         setUser((prev: any) => ({...prev, [e.target.id]:e.target.value}))
     }
 
-    const handleSubmit = () => {
-        // e.preventDefault()
-
+    const handleSubmit = async () => {
+        setIsLoading(true)
         try {
-            // const response = await apiLogin({...user})
-        } catch (e) {
+            const response = await apiLogin({...user})
 
+            const timeout = setTimeout(() => {
+                if (response.data) {
+                    const accessToken = response.data?.accessToken as AccessToken
+                    const user = response.data?.user as User
+                    StorageManager.setBearerToken(accessToken.token)
+                    StorageManager.setUser(user)
+
+                    router.push('/')
+                }
+            }, 1000)
+
+            return () => clearTimeout(timeout)
+
+        } catch (e) {
+            console.log(e)
         }
 
     }
@@ -51,9 +66,14 @@ export default function LoginPage() {
 
                     <div className={"pt-5"}>
                         <DaisyUiButton
-                            className={"btn-block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 "}
-                            text={"Sign In"}
-                            onClick={handleSubmit}/>
+                            disabled={isLoading}
+                            className={!isLoading ? "btn-block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500": "btn-block bg-base-200 hover:bg-base-300"}
+                            text={!isLoading ? "Sign In" : ""}
+                            onClick={handleSubmit}>
+                            {isLoading ? (<>
+                                <span className="loading loading-spinner"></span>
+                                loading </>) : null }
+                        </DaisyUiButton>
                     </div>
                 </div>
             </div>

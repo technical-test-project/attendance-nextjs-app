@@ -1,13 +1,32 @@
+const bearerTokenKey = 'bearerToken'
+const userKey = 'user'
+
 export default class StorageManager {
-    static clearToken(): void {
-        localStorage.removeItem('token')
+
+
+    static clearStorage(): void {
+        localStorage.clear()
     }
 
-    static getToken(): string {
-        let token = localStorage.getItem('token')
-        return JSON.parse(token)
+
+    /**
+     * BearerToken
+     */
+    static getBearerToken(): string {
+        return JSON.parse(localStorage.getItem(bearerTokenKey))
     }
-    static setToken(token: string) {
-        localStorage.setItem('token', JSON.stringify(token))
+    static setBearerToken(token: string) {
+        localStorage.setItem(bearerTokenKey, JSON.stringify(token))
+    }
+
+    /**
+     * User
+     * @param user
+     */
+    static setUser(user: User) {
+        localStorage.setItem(userKey, JSON.stringify(user))
+    }
+    static getUser(): User {
+        return JSON.parse(localStorage.getItem(userKey))
     }
 }

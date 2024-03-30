@@ -16,19 +16,20 @@ export default function ProtectedPage(props: Props) {
 
     useEffect(() => {
         const checkAuth = async () => {
-            const response = await axiosInstance.get('/profile')
+            try {
+                const response = await axiosInstance.get('/profile')
+                /**
+                 * Authenticated
+                 */
+                if (response.status !== 401) {
+                    setAuthenticated(true)
 
-            /**
-             * Authenticated
-             */
-            if (response.status !== 401) {
-                setAuthenticated(true)
-
-                // If authenticated, but access login page is redirect back
-                if (pathname === '/login') {
-                    router.push('/')
+                    // If authenticated, but access login page is redirect back
+                    if (pathname === '/login') {
+                        router.push('/')
+                    }
                 }
-            } else {
+            }catch (e) {
                 setAuthenticated(false)
                 router.push('/login')
             }

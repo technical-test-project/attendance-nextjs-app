@@ -1,6 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import Image from "next/image";
 import MenuList from "@/components/DaisyUi/NavbarSidebar/menu";
+import {apiLogout} from "@/api/logout";
+import {useRouter} from "next/navigation";
+import {DaisyUiModal} from "@/components/DaisyUi";
+import StorageManager from "@/utils/storageManager";
 
 interface Props {
     children?: React.ReactNode
@@ -8,7 +12,39 @@ interface Props {
 
 
 export default function DaisyUiComponent(props: Props) {
+    const router = useRouter()
+    const [isOpenModal, setIsOpenModal] = useState(false)
+
+    async function handleLogout() {
+        try {
+            const response = await apiLogout()
+
+            const timeout = setTimeout(() => {
+                if (response) {
+                    router.push('/login')
+                }
+            }, 1000)
+
+            return () => clearTimeout(timeout)
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+
     return <>
+        <DaisyUiModal isOpen={isOpenModal}
+                      title={'Logout'}
+                      message={'Apakah anda yakin ingin mengakhiri sesi ini?'}
+                      options={{btnConfirm: {text: 'Logout'}, btnClose: {text: 'Batal'}}}
+                      onConfirm={() => {
+                          handleLogout()
+                      }}
+                      onClose={() => {
+                          setIsOpenModal(false)
+                      }}/>
+
         {/* NavbarSidebar */}
         <div className="drawer">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle"/>
@@ -37,7 +73,12 @@ export default function DaisyUiComponent(props: Props) {
                         <ul tabIndex={0}
                             className="menu menu-sm dropdown-content mt-3 p-3 shadow bg-base-300 rounded-box w-40 gap-1">
                             <li><a>Profile</a></li>
-                            <li className="text-red-500"><a>Logout</a></li>
+
+                            <li className="text-red-500">
+                                <a onClick={() => {
+                                    setIsOpenModal(true)
+                                }}>Logout</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

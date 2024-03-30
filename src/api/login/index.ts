@@ -1,6 +1,5 @@
 import axiosInstance from "@/lib/axios";
 
-
 interface LoginData {
     email?: string | undefined;
     password?: string | undefined;

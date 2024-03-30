@@ -7,8 +7,7 @@ const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use((config) => {
-    // const bearerToken = StorageManager.getToken()
-    const bearerToken = "oat_MTI.M0Y1a3VzMFR2dlJQcjhpMnVsYmNWcEcxRHU5RTdmUmpYelFRclg0TzIwMjAwNTQ2MQ"
+    const bearerToken = StorageManager.getBearerToken()
     console.log(`storageToken : ${bearerToken}`)
 
     if (!config.headers['Authorization']) {
