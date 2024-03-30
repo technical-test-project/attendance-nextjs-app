@@ -3,15 +3,27 @@
 import {DaisyUiBaseLayout, DaisyUiFooter, DaisyUiNavbarSidebar, DaisyUiContentPageLayout} from "@/components/DaisyUi";
 import DashboardPage from "@/pages/DashboardPage";
 import React from "react";
-import {useSession} from "next-auth/react";
 
 export default function Home() {
-
-    const { data } = useSession()
-    console.log(data)
-
-
     return (<>
-       <p>Check Auth</p>
+        <title>Dashboard</title>
+        {/* Base Layout */}
+        <DaisyUiBaseLayout>
+
+            {/* Navbar + Sidebar */}
+            <DaisyUiNavbarSidebar/>
+
+            {/* Content Page Layout */}
+            <DaisyUiContentPageLayout titlePage={"Dashboard"}>
+
+                {/* Page */}
+                <DashboardPage/>
+
+            </DaisyUiContentPageLayout>
+
+            {/* Footer */}
+            <DaisyUiFooter/>
+
+        </DaisyUiBaseLayout>
     </>);
 }

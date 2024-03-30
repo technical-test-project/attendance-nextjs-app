@@ -1,7 +1,7 @@
-import api from "@/lib/axios";
+import axiosInstance from "@/lib/axios";
 
 export const apiAttendances = async (params: AttendanceQSInterface) : Promise<ResponseData> => {
-    const response = await api.get('/attendances', {
+    const response = await axiosInstance.get('/attendances', {
         params
     })
 
@@ -9,20 +9,20 @@ export const apiAttendances = async (params: AttendanceQSInterface) : Promise<Re
 }
 
 export const apiTodayAttendance = async (): Promise<ResponseData> => {
-    const response = await api.get('/attendances/today')
+    const response = await axiosInstance.get('/attendances/today')
 
     return response.data
 }
 
 
 export const apiAttendanceClockIn = async () => {
-    const response = await api.post('/attendances/clock-in')
+    const response = await axiosInstance.post('/attendances/clock-in')
 
     return response.data
 }
 
 export const apiAttendanceClockOut = async () => {
-    const response = await api.post('/attendances/clock-out')
+    const response = await axiosInstance.post('/attendances/clock-out')
 
     return response.data
 }

@@ -1,23 +1,24 @@
 import axios from "axios";
 import StorageManager from "@/utils/storageManager";
 
-const api = axios.create({
+const axiosInstance = axios.create({
     // baseURL: `${process.env.NEXT_PUBLIC_API_URL}`
     baseURL: `http://localhost:3333/api/`,
 })
 
-api.interceptors.request.use((config) => {
-    const token = StorageManager.getToken()
-    console.log(`storageToken : ${token}`)
+axiosInstance.interceptors.request.use((config) => {
+    // const bearerToken = StorageManager.getToken()
+    const bearerToken = "oat_MTI.M0Y1a3VzMFR2dlJQcjhpMnVsYmNWcEcxRHU5RTdmUmpYelFRclg0TzIwMjAwNTQ2MQ"
+    console.log(`storageToken : ${bearerToken}`)
 
-    if (token) {
-        config.headers['Authorization'] = `Bearer ${token}`;
+    if (!config.headers['Authorization']) {
+        config.headers['Authorization'] = `Bearer ${bearerToken}`;
     }
     return config
 }, (error) => Promise.reject(error))
 
 
-api.interceptors.response.use(null, (error) => {
+axiosInstance.interceptors.response.use(null, (error) => {
     if (error.response) {
         const { status, data } = error.response;
         switch (status) {
@@ -63,4 +64,4 @@ export class ApiResponseException extends Error {
 }
 
 
-export default api
+export default axiosInstance

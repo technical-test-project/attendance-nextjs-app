@@ -4,6 +4,7 @@ import {useRouter} from "next/navigation";
 import Image from "next/image";
 import {DaisyUiButton, DaisyUiTextInput} from "@/components/DaisyUi";
 import {useState} from "react";
+import {apiLogin} from "@/api/login";
 
 export default function LoginPage() {
     const router = useRouter()
@@ -13,8 +14,15 @@ export default function LoginPage() {
         setUser((prev: any) => ({...prev, [e.target.id]:e.target.value}))
     }
 
-    const handleSubmit = (e: any) => {
-        e.preventDefault()
+    const handleSubmit = () => {
+        // e.preventDefault()
+
+        try {
+            // const response = await apiLogin({...user})
+        } catch (e) {
+
+        }
+
     }
 
     return <>
@@ -33,7 +41,7 @@ export default function LoginPage() {
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-100">Sign in to your
                         account</h2>
                 </div>
-                <form className="mt-8 space-y-6">
+                <div className="mt-8 space-y-6">
                     <DaisyUiTextInput label={"Email"} type={"text"} id={"email"} placeholder={"Enter your email"}
                                       onChange={handleInput}
                                       required/>
@@ -45,9 +53,9 @@ export default function LoginPage() {
                         <DaisyUiButton
                             className={"btn-block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 "}
                             text={"Sign In"}
-                            onClick={() => router.push('/')}/>
+                            onClick={handleSubmit}/>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </>

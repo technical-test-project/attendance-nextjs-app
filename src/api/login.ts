@@ -1,4 +1,4 @@
-import api from "@/lib/axios";
+import axiosInstance from "@/lib/axios";
 
 
 interface LoginData {
@@ -7,7 +7,7 @@ interface LoginData {
 }
 
 export const apiLogin = async (data: LoginData): Promise<ResponseData> => {
-    const response = await api.post('/login', data)
+    const response = await axiosInstance.post('/login', data)
 
     return response.data
 }
