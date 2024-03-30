@@ -5,6 +5,7 @@ import {apiLogout} from "@/api/logout";
 import {useRouter} from "next/navigation";
 import {DaisyUiModal} from "@/components/DaisyUi";
 import StorageManager from "@/utils/storageManager";
+import Helpers from "@/utils/helpers";
 
 interface Props {
     children?: React.ReactNode
@@ -14,6 +15,7 @@ interface Props {
 export default function DaisyUiComponent(props: Props) {
     const router = useRouter()
     const [isOpenModal, setIsOpenModal] = useState(false)
+    const user = StorageManager.getUser()
 
     async function handleLogout() {
         try {
@@ -37,7 +39,9 @@ export default function DaisyUiComponent(props: Props) {
         <DaisyUiModal isOpen={isOpenModal}
                       title={'Logout'}
                       message={'Apakah anda yakin ingin mengakhiri sesi ini?'}
-                      options={{btnConfirm: {text: 'Logout'}, btnClose: {text: 'Batal'}}}
+                      options={{
+                          btnConfirm: {text: 'Logout', className: 'bg-red-500 hover:bg-red-400'},
+                          btnClose: {text: 'Batal', className: 'bg-blue-500 hover:bg-base-400'}}}
                       onConfirm={() => {
                           handleLogout()
                       }}
@@ -104,8 +108,8 @@ export default function DaisyUiComponent(props: Props) {
                     </div>
 
                     <div className="flex flex-col mt-4 text-center">
-                        <span className="grid text-sm mb-2">email@email.com</span>
-                        <span className="grid text-xl">Admin</span>
+                        <span className="grid text-sm mb-2">{user?.email}</span>
+                        <span className="grid text-xl">{Helpers.ucWords(user?.role?.name)}</span>
                     </div>
 
 

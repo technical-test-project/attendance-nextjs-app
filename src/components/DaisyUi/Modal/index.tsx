@@ -5,6 +5,7 @@ interface ButtonOptions {
     text?: string;
     hidden?: boolean;
     disabled?: boolean;
+    className?: string;
 }
 
 interface Options {
@@ -51,14 +52,14 @@ export default function DaisyUiComponent(props: Props) {
                 <div className="modal-action gap-1.5">
 
                     {/* onClose */}
-                    <DaisyUiButton className="bg-red-500 hover:bg-red-400"
+                    <DaisyUiButton className={props.options?.btnClose?.className ?? "bg-red-500 hover:bg-red-400"}
                                    text={btnCloseText}
                                    disabled={isLoading}
                                    hidden={props.options?.btnClose?.hidden}
                                    onClick={handleOnClose}/>
 
                     {/* onConfirm */}
-                    <DaisyUiButton className={!isLoading ? "" : "bg-base-200 hover:bg-base-300"}
+                    <DaisyUiButton className={!isLoading ? (props.options?.btnConfirm?.className ?? ""): "bg-base-200 hover:bg-base-300"}
                                    text={!isLoading ? btnConfirmText : ""}
                                    disabled={isLoading}
                                    hidden={props.options?.btnConfirm?.hidden}

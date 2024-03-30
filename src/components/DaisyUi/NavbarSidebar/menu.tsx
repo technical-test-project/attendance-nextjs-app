@@ -1,27 +1,41 @@
 import React from "react";
-import Link from "next/link";
-import {ClipboardDocumentCheckIcon, HomeIcon} from "@heroicons/react/24/solid";
+import {ClipboardDocumentCheckIcon, HomeIcon, UserGroupIcon} from "@heroicons/react/24/solid";
+import StorageManager from "@/utils/storageManager";
+import {useRouter} from "next/navigation";
 
-
-const menuList = [{
-    icon: <HomeIcon className="grid text-white h-1/6 w-1/6 pointer-events-none"/>,
-    label: 'Dashboard',
-    url: '/'
-}, {
-    icon: <ClipboardDocumentCheckIcon className="grid text-white h-1/6 w-1/6 pointer-events-none"/>,
-    label: 'Attendance',
-    url: '/attendance'
-},]
 
 export default function DaisyUiComponent() {
+    const router = useRouter()
+
+    const role = StorageManager.getUser()?.role
+
+    const menuList = [{
+        roles: ['admin', 'employee'],
+        icon: <HomeIcon className="grid text-white h-1/6 w-1/6 pointer-events-none"/>,
+        label: 'Dashboard',
+        url: '/'
+    }, {
+        roles: ['admin', 'employee'],
+        icon: <ClipboardDocumentCheckIcon className="grid text-white h-1/6 w-1/6 pointer-events-none"/>,
+        label: 'Absensi',
+        url: '/attendance'
+    }, {
+        roles: ['admin'],
+        icon: <UserGroupIcon className="grid text-white h-1/6 w-1/6 pointer-events-none"/>,
+        label: 'User',
+        url: '/users'
+    }]
+
+    const menuFilterByRole = menuList.filter((menu) => menu.roles.includes(role?.name))
+
+
     return <>
         <ul className="mx-auto">
-            {menuList.map((item, index) => (<li key={index} className="my-4 flex flex-row items-center">
-                {item.icon}
-                <Link href={item.url} className={"grid"}>
+            {menuFilterByRole.map((item, index) => (
+                <li key={index} className="my-4 flex flex-row items-center" onClick={() => router.push(item.url)}>
+                    {item.icon}
                     <span className="text-sm text-white mt-1">{item.label}</span>
-                </Link>
-            </li>))}
+                </li>))}
         </ul>
     </>
 }

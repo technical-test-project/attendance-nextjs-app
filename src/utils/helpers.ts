@@ -11,7 +11,7 @@ export default class Helpers {
 
             if (!groupedData[key]) {
                 groupedData[key] = {
-                    id: `${index+1}`,
+                    id: `${index + 1}`,
                     userName: data.user.profile.name,
                     clockInAt: this.convertDate(data.clockAt),
                     clockOutAt: null,
@@ -37,8 +37,12 @@ export default class Helpers {
 
         try {
             return dayjs(date).locale('id').format(format ?? defaultFormat)
-        }   catch (e) {
+        } catch (e) {
             return `Cannot Convert this string "${date}"`
         }
+    }
+
+    static ucWords(word: string): string {
+        return word.charAt(0).toUpperCase() + word.slice(1);
     }
 }
