@@ -1,11 +1,14 @@
-import {DaisyUiDateRange, DaisyUiPagination, DaisyUiTable} from "@/components/DaisyUi";
-import React, {useEffect, useMemo, useState} from "react";
-import {apiAttendances} from "@/api/attendances";
+import {DaisyUiButton, DaisyUiDateRange, DaisyUiModal, DaisyUiTable} from "@/components/DaisyUi";
+import React, {useEffect, useState} from "react";
+import {apiAttendanceClockIn, apiAttendanceClockOut, apiAttendances, apiTodayAttendance} from "@/api/attendances";
 import Helpers from "@/utils/helpers";
+import {debounce} from "next/dist/server/utils";
+
 
 export default function AttendancePage() {
     const [data, setData] = useState<AttendanceGroupByDate[]>();
     const [columns, setColumns] = useState<TableColumn[]>()
+    const [todayAttendance, setTodayAttendance] = useState<TodayAttendance>()
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -13,31 +16,102 @@ export default function AttendancePage() {
     const [startDate, setStartDate] = useState<any>(null)
     const [endDate, setEndDate] = useState<any>(null)
 
+    const [isOpenModalClockIn, setIsOpenModalClockIn] = useState(false)
+    const [isOpenModalClockOut, setIsOpenModalClockOut] = useState(false)
+
+    const fetchData = () => {
+        fetchTodayAttendance()
+        fetchAttendances()
+
+    }
 
     useEffect(() => {
-        // @ts-ignore
         fetchData()
     }, [])
 
 
-    const fetchData = async (queryParams: AttendanceQSInterface) => {
+    /**
+     * Fetch Attendance
+     * - Filter by query params { AttendanceQSInterface }
+     * @param queryParams
+     */
+    const globalColumns = [
+        {field: 'id', headerName: 'No'},
+        {field: 'userName', headerName: 'Nama Karyawan'},
+        {field: 'clockInAt', headerName: 'Jam Masuk'},
+        {field: 'clockOutAt', headerName: 'Jam Pulang'}
+    ]
+
+    const fetchAttendances = async (queryParams: AttendanceQSInterface) => {
         setLoading(true);
         try {
             const response = await apiAttendances(queryParams)
             const mappingData = Helpers.attendanceGroupByDate(response.data)
 
             setData(mappingData)
-            setColumns([
-                {field: 'id', headerName: 'No'},
-                {field: 'userName',headerName: 'Nama Karyawan'},
-                {field: 'clockInAt', headerName: 'Jam Masuk'}, 
-                {field: 'clockOutAt', headerName: 'Jam Pulang'},
-            ])
+            setColumns(globalColumns)
         } catch (e: any) {
             setError(e);
         } finally {
             setLoading(false);
         }
+    }
+
+    /**
+     * Fetch Today Attendance
+     * - Check Is ClockIn & Is ClockOut
+     */
+    const fetchTodayAttendance = async () => {
+        try {
+            const response = await apiTodayAttendance()
+
+            setTodayAttendance(response.data)
+        } catch (e: any) {
+            setError(e);
+        } finally {
+            // setLoading(false);
+        }
+    }
+
+    /**
+     * Store Attendance Clock In
+     */
+    const storeAttendanceClockIn = async () => {
+        try {
+            const response = await apiAttendanceClockIn()
+            if (response.data !== null) {
+                refreshPage()
+            }
+        } catch (e: any) {
+            setError(e);
+        }
+    }
+
+
+    /**
+     * Store Attendance Clock In
+     */
+    const storeAttendanceClockOut = async () => {
+
+        try {
+            const response = await apiAttendanceClockOut()
+            if (response.data !== null) {
+                refreshPage()
+            }
+        } catch (e: any) {
+            setError(e);
+        }
+    }
+
+
+    const refreshPage = () => {
+        const timeout = setTimeout(() => {
+            setIsOpenModalClockIn(false)
+            setIsOpenModalClockOut(false)
+            fetchData()
+        }, 1000)
+
+        return () => clearTimeout(timeout)
     }
 
 
@@ -51,6 +125,46 @@ export default function AttendancePage() {
                     hari ini.
                     Terima kasih atas kerjasamanya!
                 </p>
+
+                <div className="flex join mx-auto gap-1.5">
+
+                    <DaisyUiButton text={"Absen Datang"}
+                                   className={"disabled:border-white"}
+                                   disabled={todayAttendance?.isClockIn}
+                                   onClick={() => {
+                                       setIsOpenModalClockIn(true)
+                                   }}/>
+
+                    <DaisyUiModal isOpen={isOpenModalClockIn}
+                                  title={'Absen Datang'}
+                                  message={'Apakah anda yakin ingin melakukan absensi datang?'}
+                                  onConfirm={() => {
+                                      storeAttendanceClockIn()
+                                  }}
+                                  onClose={() => {
+                                      setIsOpenModalClockIn(false)
+                                  }}
+                    />
+
+
+                    <DaisyUiButton text={"Absen Pulang"}
+                                   className={"disabled:border-white"}
+                                   disabled={!todayAttendance?.isClockIn}
+                                   onClick={() => {
+                                       setIsOpenModalClockOut(true)
+                                   }}/>
+
+                    <DaisyUiModal isOpen={isOpenModalClockOut}
+                                  title={'Absen Pulang'}
+                                  message={'Apakah anda yakin ingin melakukan absensi pulang?'}
+                                  onConfirm={() => {
+                                      storeAttendanceClockOut()
+                                  }}
+                                  onClose={() => {
+                                      setIsOpenModalClockOut(false)
+                                  }}
+                    />
+                </div>
             </div>
         </div>
 
@@ -68,14 +182,12 @@ export default function AttendancePage() {
                     dateRangeDefaultValue={{startDate: startDate, endDate: endDate}}
                     onStartDateChange={(e: any) => setStartDate(e.target.value)}
                     onEndDateChange={(e: any) => setEndDate(e.target.value)}
-                    onSubmit={() => fetchData({startDate, endDate})}
+                    onSubmit={() => fetchAttendances({startDate, endDate})}
                 />
 
 
-                {!loading
-                    ? (<DaisyUiTable data={data} columns={columns}/>)
-                    : (<span className="loading loading-spinner loading-lg mx-auto py-20"></span>)
-                }
+                {!loading ? (<DaisyUiTable data={data} columns={columns}/>) : (
+                    <span className="loading loading-spinner loading-lg mx-auto py-20"></span>)}
 
             </div>
         </div>

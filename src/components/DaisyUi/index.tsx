@@ -6,6 +6,8 @@ export { default as DaisyUiDateRange} from "@/components/DaisyUi/DateRange";
 export { default as DaisyUiTextInput } from "@/components/DaisyUi/TextInput";
 export { default as DaisyUiSelect } from "@/components/DaisyUi/Select";
 
+export { default as DaisyUiModal } from "@/components/DaisyUi/Modal";
+
 export { default as DaisyUiTable } from "@/components/DaisyUi/Table";
 export { default as DaisyUiPagination } from "@/components/DaisyUi/Pagination";
 
