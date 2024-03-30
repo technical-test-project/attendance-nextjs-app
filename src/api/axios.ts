@@ -1,16 +1,13 @@
 import axios from "axios";
-import storage from "@/utils/storage";
+import StorageManager from "@/utils/storageManager";
 
 const api = axios.create({
     // baseURL: `${process.env.NEXT_PUBLIC_API_URL}`
     baseURL: `http://localhost:3333/api/`,
 })
 
-const bearerToken = "oat_MQ.emtMYktvdDFUWldMZFNhUndKYlhzRWZPTnpiVVV2VzllZnA3UGpwejE0MTM2NjEyNTk"
-
 api.interceptors.request.use((config) => {
-    storage.setToken(bearerToken)
-    const token = storage.getToken()
+    const token = StorageManager.getToken()
     console.log(`storageToken : ${token}`)
 
     if (token) {
