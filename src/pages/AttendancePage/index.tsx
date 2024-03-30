@@ -2,7 +2,6 @@ import {DaisyUiButton, DaisyUiDateRange, DaisyUiModal, DaisyUiTable} from "@/com
 import React, {useEffect, useState} from "react";
 import {apiAttendanceClockIn, apiAttendanceClockOut, apiAttendances, apiTodayAttendance} from "@/api/attendances";
 import Helpers from "@/utils/helpers";
-import {debounce} from "next/dist/server/utils";
 
 
 export default function AttendancePage() {
@@ -126,7 +125,7 @@ export default function AttendancePage() {
                     Terima kasih atas kerjasamanya!
                 </p>
 
-                <div className="flex join mx-auto gap-1.5">
+                <div className="flex join mx-auto gap-3">
 
                     <DaisyUiButton text={"Absen Datang"}
                                    className={"disabled:border-white"}
@@ -149,7 +148,7 @@ export default function AttendancePage() {
 
                     <DaisyUiButton text={"Absen Pulang"}
                                    className={"disabled:border-white"}
-                                   disabled={!todayAttendance?.isClockIn}
+                                   disabled={!todayAttendance?.isClockIn || todayAttendance?.isClockOut}
                                    onClick={() => {
                                        setIsOpenModalClockOut(true)
                                    }}/>
