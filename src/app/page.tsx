@@ -4,7 +4,7 @@ import {DaisyUiBaseLayout, DaisyUiFooter, DaisyUiNavbarSidebar, DaisyUiContentPa
 import DashboardPage from "@/pages/DashboardPage";
 import React from "react";
 
-export default function Home() {
+export default function Dashboard() {
     return (<>
         <title>Dashboard</title>
         {/* Base Layout */}
