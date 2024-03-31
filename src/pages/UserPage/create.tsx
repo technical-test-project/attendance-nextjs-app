@@ -25,7 +25,7 @@ export default function UserCreatePage() {
     useEffect(() => {
         const detailId = Object.values(params)[0]
         fetchPositions()
-    }, [])
+    }, [params])
 
 
     async function fetchPositions() {

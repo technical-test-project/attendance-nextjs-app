@@ -23,7 +23,7 @@ export default function DaisyUiComponent(props: Props) {
 
     useEffect(() => {
         setGlobalFilter(globalFilter)
-    })
+    },[globalFilter])
 
     const data = props.data
     const propsColumns: TableColumn[] = props.columns

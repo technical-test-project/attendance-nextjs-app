@@ -20,7 +20,7 @@ export default function UserDetailPage() {
 
 
         fetchUserDetail(detailId)
-    }, [])
+    }, [params])
 
 
     async function fetchUserDetail(detailId: string) {
@@ -50,7 +50,6 @@ export default function UserDetailPage() {
             return () => clearTimeout(timeout)
 
         } catch (e) {
-            alert(e?.message)
         }
     }
 

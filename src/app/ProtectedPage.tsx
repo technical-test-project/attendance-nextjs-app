@@ -32,7 +32,7 @@ export default function ProtectedPage(props: Props) {
         }
 
         checkAuth()
-    }, [])
+    }, [pathname])
 
     return <>{props.children}</>
 }

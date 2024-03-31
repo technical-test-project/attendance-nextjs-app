@@ -14,7 +14,7 @@ export default function UserPage() {
 
     useEffect(() => {
         fetchUsers()
-    }, [])
+    })
 
     /**
      * Fetch Users
@@ -55,18 +55,6 @@ export default function UserPage() {
         } catch (e: any) {
             setError(e);
         }
-    }
-
-    // console.log("data", data)
-
-    const refreshPage = () => {
-        const timeout = setTimeout(() => {
-
-            // fetchUsers()
-
-        }, 1000)
-
-        return () => clearTimeout(timeout)
     }
 
 

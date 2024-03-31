@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import MenuList from "@/components/DaisyUi/NavbarSidebar/menu";
 import {useRouter} from "next/navigation";
-import {DaisyUiModal} from "@/components/DaisyUi";
+import {DaisyUiAvatar, DaisyUiModal} from "@/components/DaisyUi";
 import StorageManager from "@/utils/storageManager";
-import {apiProfile} from "@/api/users";
+import {apiImageUrl, apiProfile} from "@/api/users";
 
 interface Props {
     children?: React.ReactNode
@@ -80,8 +80,7 @@ export default function DaisyUiComponent(props: Props) {
                     <div className="dropdown dropdown-end">
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
-                                <img alt="Tailwind CSS Navbar component"
-                                     src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"/>
+                                <DaisyUiAvatar className={"text-white"} src={apiImageUrl(user?.profile.photoUrl, "users")} height={40} width={40}/>
                             </div>
                         </div>
                         <ul tabIndex={0}
@@ -113,7 +112,7 @@ export default function DaisyUiComponent(props: Props) {
 
                     <div className="avatar online placeholder">
                         <div className="bg-neutral text-neutral-content rounded-full w-24">
-                            <span className="text-3xl">A</span>
+                            <DaisyUiAvatar className={"text-white"} src={apiImageUrl(user?.profile.photoUrl, "users")} height={40} width={40}/>
                         </div>
                     </div>
 

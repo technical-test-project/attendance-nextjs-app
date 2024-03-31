@@ -26,7 +26,7 @@ export default function AttendancePage() {
 
     useEffect(() => {
         fetchData()
-    }, [])
+    })
 
 
     /**

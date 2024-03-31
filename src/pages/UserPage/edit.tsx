@@ -30,7 +30,7 @@ export default function UserEditPage() {
 
         fetchUserDetail(detailId)
         fetchPositions()
-    }, [])
+    }, [params])
 
 
     async function fetchPositions() {
