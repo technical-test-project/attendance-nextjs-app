@@ -19,7 +19,7 @@ export default function DaisyUiBottomPagination(props: Props) {
 
     return <>
         <div className="flex flex-wrap items-center justify-end pt-7 px-4">
-            <div className="flex items-center gap-1 px-5">
+            <div className="hidden sm:flex items-center gap-1 px-5">
                 Go to page :
                 <DaisyUiTextInput
                     id={"page"}

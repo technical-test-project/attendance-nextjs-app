@@ -9,7 +9,7 @@ interface Props {
     onChange: EventHandlerInterface;
 }
 
-let debounce: number = 500
+let debounce: number = 200
 
 export default function DaisyUiTopPagination(props: Props) {
 
@@ -25,7 +25,7 @@ export default function DaisyUiTopPagination(props: Props) {
 
     return <>
         <div className="flex flex-wrap-reverse mb-4 mx-1">
-            <div className="flex-1">
+            <div className="flex-1 my-2">
                 <div className="flex items-center gap-2">
                     <div>Show</div>
                     <DaisyUiSelect
@@ -41,7 +41,7 @@ export default function DaisyUiTopPagination(props: Props) {
             </div>
 
 
-            <div className="flex-2 gap-1.5 mb-2">
+            <div className="gap-1.5 mb-2">
                 <DaisyUiTextInput
                     id={"a"}
                     type={"text"}

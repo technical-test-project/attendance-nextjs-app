@@ -20,7 +20,7 @@ export default function DaisyUiComponent(props: Props) {
     const dateRangeDefaultValue = props.dateRangeDefaultValue
 
     return <>
-        <div className="join flex justify-start gap-2">
+        <div className="flex flex-wrap items-center gap-3">
             <DaisyUiTextInput
                 id={"startDate"}
                 type={"date"}
@@ -33,7 +33,7 @@ export default function DaisyUiComponent(props: Props) {
                 defaultValue={dateRangeDefaultValue?.endDate}
                 onChange={props.onEndDateChange}/>
 
-            <DaisyUiButton text={props.buttonText ?? "Filter"} onClick={props.onSubmit}/>
+            <DaisyUiButton className={"max-h-10 min-h-8"} text={props.buttonText ?? "Filter"} onClick={props.onSubmit}/>
         </div>
     </>
 }

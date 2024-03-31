@@ -19,7 +19,7 @@ interface Props {
 export default function DaisyUiComponent(props: Props) {
     return <>
         <div className={"space-y-2"}>
-            <label className="block mb-1" htmlFor={props.id}>{props.label}</label>
+            {props.label ? (<label className="block mb-1" htmlFor={props.id}>{props.label}</label>) : null}
             <input
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500 text-white bg-transparent/20"
                 id={props.id}
