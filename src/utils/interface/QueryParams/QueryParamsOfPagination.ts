@@ -1,4 +1,4 @@
-interface AttendanceQSInterface {
+interface QueryParamsOfPagination {
     page?: number;
     perPage?: number;
     startDate?: string;

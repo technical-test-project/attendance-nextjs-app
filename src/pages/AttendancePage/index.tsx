@@ -31,7 +31,7 @@ export default function AttendancePage() {
 
     /**
      * Fetch Attendance
-     * - Filter by query params { AttendanceQSInterface }
+     * - Filter by query params { QueryParamsOfPagination }
      * @param queryParams
      */
     const globalColumns = [
@@ -41,7 +41,7 @@ export default function AttendancePage() {
         {field: 'clockOutAt', headerName: 'Jam Pulang'}
     ]
 
-    const fetchAttendances = async (queryParams: AttendanceQSInterface) => {
+    const fetchAttendances = async (queryParams: QueryParamsOfPagination) => {
         setLoading(true);
         try {
             const response = await apiAttendances(queryParams)

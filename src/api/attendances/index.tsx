@@ -1,6 +1,6 @@
 import axiosInstance from "@/lib/axios";
 
-export const apiAttendances = async (params: AttendanceQSInterface) : Promise<ResponseData> => {
+export const apiAttendances = async (params: QueryParamsOfPagination) : Promise<ResponseData> => {
     const response = await axiosInstance.get('/attendances', {
         params
     })
