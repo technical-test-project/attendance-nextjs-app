@@ -7,12 +7,14 @@ import StorageManager from "@/utils/storageManager";
 
 export default function UserDetailPage() {
     const router = useRouter()
-    const params = useParams()
+    const params = useParams<{id: string}>()
     const [userDetail, setUserDetail] = useState<User>()
     const [globalState, setGlobalState] = useState({
         detailId: 0,
         openModal: false
     })
+
+    console.log(params)
 
 
     useEffect(() => {
