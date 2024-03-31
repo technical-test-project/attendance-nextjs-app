@@ -10,8 +10,9 @@ export default function ProfilePage() {
         openModalUpdateProfile: false,
         openModalUpdatePassword: false,
         photoFile: null,
-        formInputPhone: null,
-        formInputPassword: null
+        phone: null,
+        password: null,
+        passwordConfirmation: null,
     })
 
     const user = globalState.user as User | null
@@ -39,17 +40,17 @@ export default function ProfilePage() {
 
     async function handleSubmit() {
 
-        const {formInputPhone, formInputPassword, photoFile} = globalState
+        const {phone, photoFile, password, passwordConfirmation} = globalState
         const formData = new FormData()
 
         if (photoFile) {
             formData.append('photo', photoFile)
         }
-        if (formInputPhone) {
-            formData.append('phone', formInputPhone)
+        if (phone) {
+            formData.append('phone', phone)
         }
-        if (formInputPassword) {
-            formData.append('password', formInputPassword)
+        if (password) {
+            formData.append('password', password)
         }
 
         try {
@@ -76,6 +77,8 @@ export default function ProfilePage() {
         }
     }
 
+    console.log(globalState)
+
 
     return <>
         <DaisyUiModal isOpen={globalState.openModalUpdateProfile}
@@ -91,7 +94,20 @@ export default function ProfilePage() {
                           }))
                       }}/>
 
-        <div className="justify-items-stretch gap-4">
+        <DaisyUiModal isOpen={globalState.openModalUpdatePassword}
+                      title={'Update Password'}
+                      message={'Apakah anda yakin ingin melakukan update password?'}
+                      options={{
+                          btnConfirm: {text: 'Update'}, btnClose: {text: 'Batal'}
+                      }}
+                      onConfirm={handleSubmit}
+                      onClose={() => {
+                          setGlobalState((prev: any) => ({
+                              ...prev, openModalUpdateProfile: false, openModalUpdatePassword: false
+                          }))
+                      }}/>
+
+        <div className="justify-items-stretch gap-4 mb-6">
 
             <div className="card card-compact bg-base-300 shadow-xl mb-10 max-w-2xl mx-auto">
                 <div className="card-body my-10">
@@ -167,6 +183,51 @@ export default function ProfilePage() {
 
                                 <div className="sm:col-span-8 flex flex-row-reverse">
                                     <DaisyUiButton text={"Update Profile"} className={"justify-end"} type={"submit"}/>
+                                </div>
+
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div className="justify-items-stretch gap-4">
+
+            <div className="card card-compact bg-base-300 shadow-xl">
+                <div className="card-body my-10 space-y-6">
+                    <div className="px-4">
+                        <h2 className="text-base font-semibold leading-7 text-white">Password</h2>
+
+                        <form method="post" onSubmit={(e: any) => {
+                            e.preventDefault()
+
+                            if (globalState.passwordConfirmation !== globalState.password) {
+                                alert('Konfirmasi Password tidak sama dengan Password')
+                                return
+                            } else {
+                                setGlobalState((prev: any) => ({
+                                    ...prev, openModalUpdateProfile: false, openModalUpdatePassword: true
+                                }))
+                            }
+                        }}>
+                            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-8">
+
+                                <div className="sm:col-span-4">
+                                    <DaisyUiTextInput id={"password"} type={"password"} label={"Password"}
+                                                      onChange={handleInput} required/>
+                                </div>
+
+                                <div className="sm:col-span-4">
+                                    <DaisyUiTextInput id={"passwordConfirmation"} type={"password"} label={"Konfirmasi Password"}
+                                                      onChange={handleInput} required/>
+                                </div>
+
+                                <div className="sm:col-span-8 flex flex-row-reverse">
+                                    <DaisyUiButton text={"Update Password"} className={"justify-end"} type={"submit"}/>
                                 </div>
 
                             </div>
