@@ -24,7 +24,7 @@ export default function AttendancePage() {
 
     useEffect(() => {
         fetchData()
-    },[loading])
+    },[])
 
 
     /**
@@ -104,10 +104,12 @@ export default function AttendancePage() {
             setIsOpenModalClockIn(false)
             setIsOpenModalClockOut(false)
             fetchData()
-        }, 1000)
+            setLoading(false)
+        }, 500)
 
         return () => clearTimeout(timeout)
     }
+
 
 
     return <>

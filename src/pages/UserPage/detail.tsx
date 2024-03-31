@@ -18,7 +18,6 @@ export default function UserDetailPage() {
     useEffect(() => {
         const detailId = Object.values(params)[0]
 
-
         fetchUserDetail(detailId)
     }, [params])
 
