@@ -3,13 +3,13 @@ import React, {ChangeEvent, useEffect, useState} from "react";
 import {useParams, useRouter} from "next/navigation";
 import {apiImageUrl, apiPositions, apiUpdateUser, apiUserDetail} from "@/api/users";
 import Helpers from "@/utils/helpers";
+import {ArrowLeftIcon} from "@heroicons/react/24/solid";
 
 
 export default function UserEditPage() {
     const router = useRouter()
-    const params = useParams()
+    const params = useParams<{id: string}>()
     const [userDetail, setUserDetail] = useState<User>()
-    const [position, setPosition] = useState<Position[]>()
     const [positionMap, setPositionMap] = useState<{ id: number, value: string }[]>()
     const [globalState, setGlobalState] = useState({
         detailId: 0,
@@ -40,7 +40,6 @@ export default function UserEditPage() {
             const map: { id: number, value: string }[] = positions.map((item) => ({
                 id: item.id, value: item.name
             }))
-            setPosition(positions)
             setPositionMap(map)
         } catch (e) {
         }
@@ -117,7 +116,7 @@ export default function UserEditPage() {
 
 
         } catch (e) {
-            alert(e?.message)
+            alert(e)
         }
     }
 
@@ -125,10 +124,11 @@ export default function UserEditPage() {
 
 
     return <>
+        <DaisyUiButton text={"Kembali"} className={"mb-4 mx-4"} onClick={()=> router.back()}/>
+
         <div className="card card-compact bg-base-300 shadow-xl mb-6 p-4">
             <div className="card-body">
                 <h2 className="card-title">Edit Pengguna</h2>
-
 
                 <DaisyUiModal isOpen={globalState.openModal}
                               title={'Update User'}
@@ -190,19 +190,20 @@ export default function UserEditPage() {
 
                         <div className="sm:col-span-4">
                             <DaisyUiSelect id={"positionId"} items={positionMap} label={"Jabatan"}
-                                           selectValue={userDetail?.position?.id}
+                                           className={"w-full"}
+                                           defaultValue={userDetail?.position?.id}
                                            onChange={handleInput}/>
                         </div>
 
                         <div className="sm:col-span-8 flex flex-row">
                             <div className="form-control">
                                 <label className="label cursor-pointer">
-                                    <input type="checkbox" className="checkbox" onChange={() => {
+                                    <input type="checkbox" className="checkbox bordered border-white" onChange={() => {
                                         setGlobalState((prev: any) => ({
                                             ...prev, withPassword: !globalState.withPassword
                                         }))
                                     }}/>
-                                    <span className="label-text mx-4">Update Dengan Password</span>
+                                    <span className="label-text text-white font-bold mx-4">Update Dengan Password</span>
                                 </label>
                             </div>
                         </div>
@@ -219,8 +220,8 @@ export default function UserEditPage() {
                         </> : null}
 
 
-                        <div className="sm:col-span-8 flex flex-row-reverse">
-                            <DaisyUiButton text={"Update"} className={"justify-end"} type={"submit"}/>
+                        <div className="sm:col-span-8 flex flex-row justify-end gap-4">
+                            <DaisyUiButton text={"Update"} type={"submit"}/>
                         </div>
 
                     </div>

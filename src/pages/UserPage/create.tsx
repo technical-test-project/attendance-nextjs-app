@@ -1,13 +1,11 @@
 import {DaisyUiAvatar, DaisyUiButton, DaisyUiModal, DaisyUiSelect, DaisyUiTextInput} from "@/components/DaisyUi";
 import React, {ChangeEvent, useEffect, useState} from "react";
-import {useParams, useRouter} from "next/navigation";
+import {useRouter} from "next/navigation";
 import {apiPositions, apiStoreUser} from "@/api/users";
 
 
 export default function UserCreatePage() {
     const router = useRouter()
-    const params = useParams()
-    const [position, setPosition] = useState<Position[]>()
     const [positionMap, setPositionMap] = useState<{ id: number, value: string }[]>()
     const [globalState, setGlobalState] = useState({
         detailId: 0,
@@ -23,9 +21,8 @@ export default function UserCreatePage() {
 
 
     useEffect(() => {
-        const detailId = Object.values(params)[0]
         fetchPositions()
-    }, [params])
+    })
 
 
     async function fetchPositions() {
@@ -35,7 +32,6 @@ export default function UserCreatePage() {
             const map: { id: number, value: string }[] = positions.map((item) => ({
                 id: item.id, value: item.name
             }))
-            setPosition(positions)
             setPositionMap(map)
         } catch (e) {
         }
@@ -103,9 +99,6 @@ export default function UserCreatePage() {
         } catch (e) {
         }
     }
-
-    // console.log(globalState)
-
 
     return <>
         <div className="card card-compact bg-base-300 shadow-xl mb-6 p-4">

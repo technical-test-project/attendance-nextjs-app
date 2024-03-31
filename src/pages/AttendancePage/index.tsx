@@ -10,7 +10,6 @@ export default function AttendancePage() {
     const [todayAttendance, setTodayAttendance] = useState<TodayAttendance>()
 
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     const [startDate, setStartDate] = useState<any>(null)
     const [endDate, setEndDate] = useState<any>(null)
@@ -21,12 +20,11 @@ export default function AttendancePage() {
     const fetchData = () => {
         fetchTodayAttendance()
         fetchAttendances()
-
     }
 
     useEffect(() => {
         fetchData()
-    })
+    },[])
 
 
     /**
@@ -50,7 +48,7 @@ export default function AttendancePage() {
             setData(mappingData)
             setColumns(globalColumns)
         } catch (e: any) {
-            setError(e);
+            console.log(e)
         } finally {
             setLoading(false);
         }
@@ -66,9 +64,7 @@ export default function AttendancePage() {
 
             setTodayAttendance(response.data)
         } catch (e: any) {
-            setError(e);
-        } finally {
-            // setLoading(false);
+            console.log(e)
         }
     }
 
@@ -82,7 +78,7 @@ export default function AttendancePage() {
                 refreshPage()
             }
         } catch (e: any) {
-            setError(e);
+            console.log(e)
         }
     }
 
@@ -98,7 +94,7 @@ export default function AttendancePage() {
                 refreshPage()
             }
         } catch (e: any) {
-            setError(e);
+            console.log(e)
         }
     }
 
@@ -108,10 +104,12 @@ export default function AttendancePage() {
             setIsOpenModalClockIn(false)
             setIsOpenModalClockOut(false)
             fetchData()
-        }, 1000)
+            setLoading(false)
+        }, 500)
 
         return () => clearTimeout(timeout)
     }
+
 
 
     return <>

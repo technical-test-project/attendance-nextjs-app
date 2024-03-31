@@ -2,9 +2,11 @@ import React, {ChangeEvent, useEffect, useState} from "react";
 import Helpers from "@/utils/helpers";
 import {DaisyUiAvatar, DaisyUiButton, DaisyUiModal, DaisyUiTextInput} from "@/components/DaisyUi";
 import {apiImageUrl, apiProfile, apiUpdateUserProfile} from "@/api/users";
+import {useRouter} from "next/navigation";
 
 
 export default function ProfilePage() {
+    const router= useRouter()
     const [globalState, setGlobalState] = useState({
         user: null,
         openModalUpdateProfile: false,
@@ -103,6 +105,7 @@ export default function ProfilePage() {
                               ...prev, openModalUpdateProfile: false, openModalUpdatePassword: false
                           }))
                       }}/>
+        <DaisyUiButton text={"Kembali"} className={"mb-4 mx-4"} onClick={()=> router.back()}/>
 
         <div className="justify-items-stretch gap-4 mb-6">
 
