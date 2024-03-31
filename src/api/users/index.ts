@@ -22,8 +22,8 @@ export const apiProfile = async (): Promise<ResponseData> => {
     return responseData
 }
 
-export const apiUpdateUserProfile = async (formData: FormData): Promise<ResponseData> => {
-    const response = await axiosInstance.post(`/profile/update`, formData, {
+export const apiUpdateUserProfile = async (userId: number, formData: FormData): Promise<ResponseData> => {
+    const response = await axiosInstance.putForm(`/profile/${userId}/update`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
@@ -53,7 +53,7 @@ export const apiStoreUser = async (formData: FormData): Promise<ResponseData> =>
 }
 
 export const apiUpdateUser = async (userId: number, formData: FormData): Promise<ResponseData> => {
-    const response = await axiosInstance.patch(`/users/${userId}`, formData, {
+    const response = await axiosInstance.putForm(`/users/${userId}`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
@@ -64,6 +64,12 @@ export const apiUpdateUser = async (userId: number, formData: FormData): Promise
 
 export const apiDeleteUser = async (userId: number): Promise<ResponseData> => {
     const response = await axiosInstance.delete(`/users/${userId}`)
+
+    return response.data
+}
+
+export const apiPositions = async (): Promise<ResponseData> => {
+    const response = await axiosInstance.get(`/positions`)
 
     return response.data
 }

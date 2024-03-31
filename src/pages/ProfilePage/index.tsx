@@ -54,7 +54,7 @@ export default function ProfilePage() {
         }
 
         try {
-            const response = await apiUpdateUserProfile(formData)
+            const response = await apiUpdateUserProfile(Number(user?.id), formData)
 
             const timeout = setTimeout(() => {
                 if (response.data) {

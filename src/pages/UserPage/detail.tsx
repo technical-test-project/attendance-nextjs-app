@@ -1,7 +1,7 @@
-import {DaisyUiButton, DaisyUiModal, DaisyUiTextInput} from "@/components/DaisyUi";
+import {DaisyUiAvatar, DaisyUiButton, DaisyUiModal, DaisyUiTextInput} from "@/components/DaisyUi";
 import React, {useEffect, useState} from "react";
 import {useParams, useRouter} from "next/navigation";
-import {apiDeleteUser, apiUserDetail} from "@/api/users";
+import {apiDeleteUser, apiImageUrl, apiUserDetail} from "@/api/users";
 import StorageManager from "@/utils/storageManager";
 
 
@@ -54,14 +54,18 @@ export default function UserDetailPage() {
         }
     }
 
-    console.log(globalState.detailId)
-
     return <>
         <div className="card card-compact bg-base-300 shadow-xl mb-6 p-4">
             <div className="card-body">
                 <h2 className="card-title">Detail Pengguna</h2>
 
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-8">
+
+                    <div className="sm:col-span-8 mx-auto">
+                    <DaisyUiAvatar className={"text-white rounded-full bg-white"}
+                                   src={apiImageUrl(userDetail?.profile.photoUrl, 'users')}
+                                   height={120} width={120}/>
+                    </div>
 
                     <div className="sm:col-span-4">
                         <DaisyUiTextInput id={"name"} type={"text"} label={"Nama"}
@@ -87,12 +91,17 @@ export default function UserDetailPage() {
                                           readOnly/>
                     </div>
 
-                    <div className="sm:col-span-8 flex flex-row-reverse">
+                    <div className="sm:col-span-8 flex flex-row-reverse gap-4">
+                        <DaisyUiButton text={"Edit User"}
+                                       onClick={() => {
+                                           router.push(`/users/${userDetail?.id}/edit`)
+                                       }}/>
                         <DaisyUiButton text={"Hapus User"} className={"justify-end bg-red-500 hover:bg-red-400"}
-                        onClick={()=> {
-                            setGlobalState((prev: any) => ({...prev, openModal: true}))
-                        }}/>
+                                       onClick={() => {
+                                           setGlobalState((prev: any) => ({...prev, openModal: true}))
+                                       }}/>
                     </div>
+
 
                     <DaisyUiModal isOpen={globalState.openModal}
                                   title={'Hapus User'}

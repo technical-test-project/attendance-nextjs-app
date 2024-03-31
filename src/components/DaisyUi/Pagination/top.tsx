@@ -29,8 +29,9 @@ export default function DaisyUiTopPagination(props: Props) {
                 <div className="flex items-center gap-2">
                     <div>Show</div>
                     <DaisyUiSelect
+                        id={"paginateSize"}
                         className="bordered border-white select-sm"
-                        value={props.table.getState().pagination.pageSize.toString()}
+                        // value={props.table.getState().pagination.pageSize.toString()}
                         items={[10, 20, 30, 50, 100]}
                         onChange={(e: any) => {
                             props.table.setPageSize(Number(e.target.value))
