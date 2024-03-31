@@ -1,67 +1,94 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
-import StorageManager from "@/utils/storageManager";
 import Helpers from "@/utils/helpers";
-import {UserCircleIcon} from "@heroicons/react/24/solid";
 import {DaisyUiAvatar, DaisyUiButton, DaisyUiModal, DaisyUiTextInput} from "@/components/DaisyUi";
-import {apiProfile} from "@/api/users";
+import {apiImageUrl, apiProfile, apiUpdateUserProfile} from "@/api/users";
 
 
 export default function ProfilePage() {
-    const [user, setUser] = useState<User | null>(null)
-    const [formInput, setFormInput] = useState({phone: null, password: null})
-    const [photoFile, setPhotoFile] = useState<File | null>(null)
-    const [isOpenModal, setIsOpenModal] = useState(false);
+    const [globalState, setGlobalState] = useState({
+        user: null,
+        openModalUpdateProfile: false,
+        openModalUpdatePassword: false,
+        photoFile: null,
+        formInputPhone: null,
+        formInputPassword: null
+    })
+
+    const user = globalState.user as User | null
+
 
     useEffect(() => {
-        async function fetchUserProfile() {
-            const response = await apiProfile()
-            if (response.data){
-                const refreshUser = response.data as User
-                setUser(refreshUser)
-            }
-        }
-
         fetchUserProfile()
     }, []);
 
-    const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.id === 'photo') {
-            const selectedFile = e.target.files?.[0] ?? null
-            setPhotoFile(selectedFile)
+    async function fetchUserProfile() {
+        const response = await apiProfile()
+        if (response.data) {
+            const refreshUser = response.data as User
+            setGlobalState((prev: any) => ({...prev, user: refreshUser}))
         }
-        setFormInput((prev: any) => ({...prev, [e.target.id]: e.target.value}))
     }
 
-    const handleSubmit = (e: ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault()
+    function handleInput(e: ChangeEvent<HTMLInputElement>) {
+        if (e.target.id === 'photo') {
+            const selectedFile = e.target.files?.[0] ?? null
+            setGlobalState((prev: any) => ({...prev, photoFile: selectedFile}))
+        }
+        setGlobalState((prev: any) => ({...prev, [e.target.id]: e.target.value}))
+    }
 
-        const { phone, password} = formInput
+    async function handleSubmit() {
+
+        const {formInputPhone, formInputPassword, photoFile} = globalState
         const formData = new FormData()
 
-        if (photoFile){
+        if (photoFile) {
             formData.append('photo', photoFile)
         }
-        if (phone){
-            formData.append('phone', phone)
+        if (formInputPhone) {
+            formData.append('phone', formInputPhone)
         }
-        if (password){
-            formData.append('password', password)
+        if (formInputPassword) {
+            formData.append('password', formInputPassword)
         }
 
-        console.log(formData)
+        try {
+            const response = await apiUpdateUserProfile(formData)
+
+            const timeout = setTimeout(() => {
+                if (response.data) {
+                    setGlobalState((prev: any) => ({
+                        ...prev, openModalUpdateProfile: false, openModalUpdatePassword: false, photoFile: null,
+                    }))
+
+                    fetchUserProfile()
+
+                    alert(response.message)
+                    window.location.reload()
+                }
+            }, 1000)
+            return () => clearTimeout(timeout)
+        } catch (e) {
+            setGlobalState((prev: any) => ({
+                ...prev, openModalUpdateProfile: false, openModalUpdatePassword: false, photoFile: null,
+            }))
+            console.log(e)
+        }
     }
 
 
     return <>
-        <DaisyUiModal isOpen={isOpenModal}
+        <DaisyUiModal isOpen={globalState.openModalUpdateProfile}
                       title={'Update Profile'}
                       message={'Apakah anda yakin ingin melakukan update profile?'}
                       options={{
-                          btnConfirm: {text: 'Logout', className: 'bg-red-500 hover:bg-red-400'},
-                          btnClose: {text: 'Batal', className: 'bg-blue-500 hover:bg-base-400'}}}
+                          btnConfirm: {text: 'Update'}, btnClose: {text: 'Batal'}
+                      }}
                       onConfirm={handleSubmit}
                       onClose={() => {
-                          setIsOpenModal(false)
+                          setGlobalState((prev: any) => ({
+                              ...prev, openModalUpdateProfile: false, openModalUpdatePassword: false
+                          }))
                       }}/>
 
         <div className="justify-items-stretch gap-4">
@@ -69,7 +96,9 @@ export default function ProfilePage() {
             <div className="card card-compact bg-base-300 shadow-xl mb-10 max-w-2xl mx-auto">
                 <div className="card-body my-10">
                     <div className="flex flex-col items-center justify-center">
-                        <DaisyUiAvatar className={"text-white"} src={null} height={175} width={175}/>
+                        <DaisyUiAvatar className={"text-white rounded-full bg-white mb-4"}
+                                       src={apiImageUrl(user?.profile.photoUrl, 'users')}
+                                       height={180} width={180}/>
 
                         <h1 className="text-xl font-bold mb-2">{Helpers.ucWords(user?.profile?.name ?? '-')}</h1>
                         <p className="text-gray-200 mb-2">{user?.email}</p>
@@ -87,7 +116,12 @@ export default function ProfilePage() {
                             Informasi ini akan ditampilkan secara publik, jadi berhati-hatilah dengan apa yang Anda
                             bagikan.
                         </p>
-                        <form method="post" onSubmit={() => handleSubmit}>
+                        <form method="post" onSubmit={(e: any) => {
+                            e.preventDefault()
+                            setGlobalState((prev: any) => ({
+                                ...prev, openModalUpdateProfile: true, openModalUpdatePassword: false
+                            }))
+                        }}>
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-8">
 
                                 <div className="col-span-full">
@@ -96,7 +130,10 @@ export default function ProfilePage() {
                                         Photo
                                     </label>
                                     <div className="mt-2 flex items-center gap-x-3">
-                                        <UserCircleIcon className="h-12 w-12 text-white" aria-hidden="true"/>
+                                        <DaisyUiAvatar className={"text-white rounded-full bg-white"}
+                                                       src={apiImageUrl(user?.profile.photoUrl, 'users')}
+                                                       height={45} width={45}/>
+
                                         <DaisyUiTextInput id={"photo"} type={"file"} onChange={handleInput}/>
                                     </div>
                                 </div>
@@ -104,7 +141,8 @@ export default function ProfilePage() {
 
                                 <div className="sm:col-span-4">
                                     <DaisyUiTextInput id={"name"} type={"text"} label={"Nama"}
-                                                      defaultValue={Helpers.ucWords(user?.profile.name ?? '-')} readOnly/>
+                                                      defaultValue={Helpers.ucWords(user?.profile.name ?? '-')}
+                                                      readOnly/>
                                 </div>
 
                                 <div className="sm:col-span-4">
