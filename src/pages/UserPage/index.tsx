@@ -1,10 +1,11 @@
 import {DaisyUiButton, DaisyUiTable} from "@/components/DaisyUi";
 import React, {useEffect, useState} from "react";
 import {apiUsers} from "@/api/users";
+import {useRouter} from "next/navigation";
 
 
 export default function UserPage() {
-
+    const router = useRouter()
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [data, setData] = useState<any[]>();
@@ -74,6 +75,11 @@ export default function UserPage() {
             <div className="card-body">
                 <h2 className="card-title">Daftar Pengguna</h2>
 
+                <div className={"grid grid-cols-8 flex my-4"}>
+                    <DaisyUiButton text={"+ Tambah"} className={"grid-cols-4"} onClick={() => {
+                        router.push('/users/create')
+                    }}/>
+                </div>
 
                 {!loading ? (<DaisyUiTable data={data} columns={columns} urlDetail={"users"}/>) : (
                     <span className="loading loading-spinner loading-lg mx-auto py-20"></span>)}

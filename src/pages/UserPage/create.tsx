@@ -1,20 +1,17 @@
 import {DaisyUiAvatar, DaisyUiButton, DaisyUiModal, DaisyUiSelect, DaisyUiTextInput} from "@/components/DaisyUi";
 import React, {ChangeEvent, useEffect, useState} from "react";
 import {useParams, useRouter} from "next/navigation";
-import {apiImageUrl, apiPositions, apiUpdateUser, apiUserDetail} from "@/api/users";
-import Helpers from "@/utils/helpers";
+import {apiPositions, apiStoreUser} from "@/api/users";
 
 
-export default function UserEditPage() {
+export default function UserCreatePage() {
     const router = useRouter()
     const params = useParams()
-    const [userDetail, setUserDetail] = useState<User>()
     const [position, setPosition] = useState<Position[]>()
     const [positionMap, setPositionMap] = useState<{ id: number, value: string }[]>()
     const [globalState, setGlobalState] = useState({
         detailId: 0,
         openModal: false,
-        withPassword: false,
         photoFile: null,
         name: null,
         email: null,
@@ -27,8 +24,6 @@ export default function UserEditPage() {
 
     useEffect(() => {
         const detailId = Object.values(params)[0]
-
-        fetchUserDetail(detailId)
         fetchPositions()
     }, [])
 
@@ -42,18 +37,6 @@ export default function UserEditPage() {
             }))
             setPosition(positions)
             setPositionMap(map)
-        } catch (e) {
-        }
-    }
-
-    async function fetchUserDetail(detailId: string) {
-
-        setGlobalState((prev: any) => ({...prev, detailId: detailId}))
-
-        try {
-            const response = await apiUserDetail(Number(detailId))
-            const user: User = response.data
-            setUserDetail(user)
         } catch (e) {
         }
     }
@@ -74,7 +57,6 @@ export default function UserEditPage() {
             const {photoFile, name, email, phone, password, positionId} = globalState
             const formData = new FormData()
             // Mix with UserId becuz error and api update user
-            formData.append('userId', detailId)
             if (photoFile) {
                 formData.append('photo', photoFile)
             }
@@ -86,6 +68,7 @@ export default function UserEditPage() {
             }
             if (email) {
                 formData.append('email', email)
+                formData.append('roleId', "2")
             }
             if (password) {
                 formData.append('password', password)
@@ -94,8 +77,9 @@ export default function UserEditPage() {
                 formData.append('positionId', positionId)
             }
 
+
             try {
-                const response = await apiUpdateUser(Number(detailId), formData)
+                const response = await apiStoreUser(formData)
 
                 const timeout = setTimeout(() => {
                     if (response.data) {
@@ -117,7 +101,6 @@ export default function UserEditPage() {
 
 
         } catch (e) {
-            alert(e?.message)
         }
     }
 
@@ -127,14 +110,14 @@ export default function UserEditPage() {
     return <>
         <div className="card card-compact bg-base-300 shadow-xl mb-6 p-4">
             <div className="card-body">
-                <h2 className="card-title">Edit Pengguna</h2>
+                <h2 className="card-title">Tambah Pengguna</h2>
 
 
                 <DaisyUiModal isOpen={globalState.openModal}
-                              title={'Update User'}
-                              message={'Apakah anda yakin ingin melakukan update pada user ini?'}
+                              title={'Tambah User'}
+                              message={'Apakah anda yakin ingin menambahkan user ini?'}
                               options={{
-                                  btnConfirm: {text: 'Update'}, btnClose: {text: 'Batal'}
+                                  btnConfirm: {text: 'Tambah'}, btnClose: {text: 'Batal'}
                               }}
                               onConfirm={handleSubmit}
                               onClose={() => {
@@ -157,7 +140,7 @@ export default function UserEditPage() {
                             </label>
                             <div className="mt-2 flex items-center gap-x-3">
                                 <DaisyUiAvatar className={"text-white rounded-full bg-white"}
-                                               src={apiImageUrl(userDetail?.profile.photoUrl, 'users')}
+                                               src={null}
                                                height={45} width={45}/>
 
                                 <DaisyUiTextInput id={"photo"} type={"file"} onChange={handleInput}/>
@@ -167,20 +150,19 @@ export default function UserEditPage() {
 
                         <div className="sm:col-span-4">
                             <DaisyUiTextInput id={"name"} type={"text"} label={"Nama"}
-                                              defaultValue={Helpers.ucWords(userDetail?.profile.name ?? '-')} required
+                                              required
                                               onChange={handleInput}/>
                         </div>
 
                         <div className="sm:col-span-4">
                             <DaisyUiTextInput id={"email"} type={"text"} label={"Email"}
-                                              defaultValue={userDetail?.email} required
+                                              required
                                               onChange={handleInput}/>
                         </div>
 
 
                         <div className="sm:col-span-4">
                             <DaisyUiTextInput id={"phone"} type={"text"} label={"Nomor Hanphone"}
-                                              defaultValue={Helpers.formatPhoneNumber(userDetail?.profile?.phone ?? '')}
                                               inputMode={"numeric"}
                                               pattern={"[0-9]*"}
                                               required
@@ -190,37 +172,20 @@ export default function UserEditPage() {
 
                         <div className="sm:col-span-4">
                             <DaisyUiSelect id={"positionId"} items={positionMap} label={"Jabatan"}
-                                           value={userDetail?.position?.id}
                                            onChange={handleInput}/>
                         </div>
 
-                        <div className="sm:col-span-8 flex flex-row">
-                            <div className="form-control">
-                                <label className="label cursor-pointer">
-                                    <input type="checkbox" className="checkbox" onChange={() => {
-                                        setGlobalState((prev: any) => ({
-                                            ...prev, withPassword: !globalState.withPassword
-                                        }))
-                                    }}/>
-                                    <span className="label-text mx-4">Update Dengan Password</span>
-                                </label>
-                            </div>
+                        <div className="sm:col-span-4">
+                            <DaisyUiTextInput id={"password"} type={"password"} label={"Password"}
+                                              onChange={handleInput}/>
+                        </div>
+                        <div className="sm:col-span-4">
+                            <DaisyUiTextInput id={"passwordConfirmation"} type={"password"}
+                                              label={"Konfirmasi Password"} onChange={handleInput}/>
                         </div>
 
-                        {globalState.withPassword ? <>
-                            <div className="sm:col-span-4">
-                                <DaisyUiTextInput id={"password"} type={"password"} label={"Password"}
-                                                  onChange={handleInput}/>
-                            </div>
-                            <div className="sm:col-span-4">
-                                <DaisyUiTextInput id={"passwordConfirmation"} type={"password"}
-                                                  label={"Konfirmasi Password"} onChange={handleInput}/>
-                            </div>
-                        </> : null}
-
-
                         <div className="sm:col-span-8 flex flex-row-reverse">
-                            <DaisyUiButton text={"Update"} className={"justify-end"} type={"submit"}/>
+                            <DaisyUiButton text={"Tambah"} className={"justify-end"} type={"submit"}/>
                         </div>
 
                     </div>
