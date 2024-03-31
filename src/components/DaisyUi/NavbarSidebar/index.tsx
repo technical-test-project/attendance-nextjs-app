@@ -1,11 +1,10 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import MenuList from "@/components/DaisyUi/NavbarSidebar/menu";
-import {apiLogout} from "@/api/logout";
 import {useRouter} from "next/navigation";
 import {DaisyUiModal} from "@/components/DaisyUi";
 import StorageManager from "@/utils/storageManager";
-import Helpers from "@/utils/helpers";
+import {apiProfile} from "@/api/users";
 
 interface Props {
     children?: React.ReactNode
@@ -15,16 +14,26 @@ interface Props {
 export default function DaisyUiComponent(props: Props) {
     const router = useRouter()
     const [isOpenModal, setIsOpenModal] = useState(false)
-    const user = StorageManager.getUser()
+    const [user, setUser] = useState<User | null>(null)
+
+
+    useEffect(() => {
+        async function fetchUserProfile() {
+            const response = await apiProfile()
+            if (response.data){
+                const refreshUser = response.data as User
+                setUser(refreshUser)
+            }
+        }
+
+        fetchUserProfile()
+    }, []);
 
     async function handleLogout() {
         try {
-            const response = await apiLogout()
-
             const timeout = setTimeout(() => {
-                if (response) {
-                    router.push('/login')
-                }
+                router.push('/login')
+                StorageManager.clearStorage()
             }, 1000)
 
             return () => clearTimeout(timeout)
@@ -41,7 +50,8 @@ export default function DaisyUiComponent(props: Props) {
                       message={'Apakah anda yakin ingin mengakhiri sesi ini?'}
                       options={{
                           btnConfirm: {text: 'Logout', className: 'bg-red-500 hover:bg-red-400'},
-                          btnClose: {text: 'Batal', className: 'bg-blue-500 hover:bg-base-400'}}}
+                          btnClose: {text: 'Batal', className: 'bg-blue-500 hover:bg-base-400'}
+                      }}
                       onConfirm={() => {
                           handleLogout()
                       }}
@@ -76,7 +86,7 @@ export default function DaisyUiComponent(props: Props) {
                         </div>
                         <ul tabIndex={0}
                             className="menu menu-sm dropdown-content mt-3 p-3 shadow bg-base-300 rounded-box w-40 gap-1">
-                            <li><a>Profile</a></li>
+                            <li><a onClick={() => router.push('/profile')}>Profile</a></li>
 
                             <li className="text-red-500">
                                 <a onClick={() => {
@@ -109,13 +119,13 @@ export default function DaisyUiComponent(props: Props) {
 
                     <div className="flex flex-col mt-4 text-center">
                         <span className="grid text-sm mb-2">{user?.email}</span>
-                        <span className="grid text-xl">{Helpers.ucWords(user?.role?.name)}</span>
+                        <span className="grid text-xl">{user?.role?.name}</span>
                     </div>
 
 
                     <div className="divider"></div>
 
-                    <MenuList/>
+                    <MenuList role={user?.role!}/>
 
                 </div>
             </div>

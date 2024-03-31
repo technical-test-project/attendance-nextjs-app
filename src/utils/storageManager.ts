@@ -13,7 +13,9 @@ export default class StorageManager {
      * BearerToken
      */
     static getBearerToken(): string {
+       // @ts-ignore
         return JSON.parse(localStorage.getItem(bearerTokenKey))
+
     }
     static setBearerToken(token: string) {
         localStorage.setItem(bearerTokenKey, JSON.stringify(token))
@@ -23,10 +25,14 @@ export default class StorageManager {
      * User
      * @param user
      */
+    static refreshUser(user: User){
+        this.setUser(user)
+    }
     static setUser(user: User) {
         localStorage.setItem(userKey, JSON.stringify(user))
     }
-    static getUser(): User {
+    static getUser(): User | null {
+        // @ts-ignore
         return JSON.parse(localStorage.getItem(userKey))
     }
 }

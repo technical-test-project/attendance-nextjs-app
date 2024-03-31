@@ -3,11 +3,14 @@ import {ClipboardDocumentCheckIcon, HomeIcon, UserGroupIcon} from "@heroicons/re
 import StorageManager from "@/utils/storageManager";
 import {useRouter} from "next/navigation";
 
+interface Props {
+    role: Role | null
+}
 
-export default function DaisyUiComponent() {
+export default function DaisyUiComponent(props: Props) {
     const router = useRouter()
 
-    const role = StorageManager.getUser()?.role
+    const role = props.role
 
     const menuList = [{
         roles: ['admin', 'employee'],
@@ -26,8 +29,7 @@ export default function DaisyUiComponent() {
         url: '/users'
     }]
 
-    const menuFilterByRole = menuList.filter((menu) => menu.roles.includes(role?.name))
-
+    const menuFilterByRole = menuList.filter((menu) => menu.roles.includes(role?.name!!))
 
     return <>
         <ul className="mx-auto">

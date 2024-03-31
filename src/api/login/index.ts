@@ -1,12 +1,8 @@
 import axiosInstance from "@/lib/axios";
 
-interface LoginData {
-    email?: string | undefined;
-    password?: string | undefined;
-}
 
-export const apiLogin = async (data: LoginData): Promise<ResponseData> => {
-    const response = await axiosInstance.post('/login', data)
+export const apiLogin = async (formData: FormData): Promise<ResponseData> => {
+    const response = await axiosInstance.post('/login', formData)
 
     return response.data
 }

@@ -59,15 +59,11 @@ export default function DaisyUiComponent(props: Props) {
                                    onClick={handleOnClose}/>
 
                     {/* onConfirm */}
-                    <DaisyUiButton className={!isLoading ? (props.options?.btnConfirm?.className ?? ""): "bg-base-200 hover:bg-base-300"}
-                                   text={!isLoading ? btnConfirmText : ""}
-                                   disabled={isLoading}
+                    <DaisyUiButton className={props.options?.btnConfirm?.className ?? ""}
+                                   text={btnConfirmText}
                                    hidden={props.options?.btnConfirm?.hidden}
-                                   onClick={handleOnConfirm}>
-                        {isLoading ? (<>
-                            <span className="loading loading-spinner"></span>
-                            loading </>) : null }
-                    </DaisyUiButton>
+                                   isLoading={isLoading}
+                                   onClick={handleOnConfirm}/>
                 </div>
             </div>
         </dialog>

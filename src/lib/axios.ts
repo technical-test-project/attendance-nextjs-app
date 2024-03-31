@@ -8,7 +8,6 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use((config) => {
     const bearerToken = StorageManager.getBearerToken()
-    console.log(`storageToken : ${bearerToken}`)
 
     if (!config.headers['Authorization']) {
         config.headers['Authorization'] = `Bearer ${bearerToken}`;
@@ -19,7 +18,7 @@ axiosInstance.interceptors.request.use((config) => {
 
 axiosInstance.interceptors.response.use(null, (error) => {
     if (error.response) {
-        const { status, data } = error.response;
+        const {status, data} = error.response;
         switch (status) {
             case 401:
                 return Promise.reject(new ApiResponseException('Unauthenticated', data.message));
@@ -38,7 +37,6 @@ axiosInstance.interceptors.response.use(null, (error) => {
         return Promise.reject(error);
     }
 })
-
 
 
 export class ApiResponseException extends Error {

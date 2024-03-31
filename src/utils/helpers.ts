@@ -45,4 +45,15 @@ export default class Helpers {
     static ucWords(word: string): string {
         return word.charAt(0).toUpperCase() + word.slice(1);
     }
+
+    static formatPhoneNumber(phoneNumber:string): string {
+        const cleaned = ('' + phoneNumber).replace(/\D/g, ''); // Remove non-numeric characters
+        const match = cleaned.match(/^(\d{4})(\d{4})(\d{4})$/); // Match the cleaned string against the desired format
+
+        if (match) {
+            return `${match[1]}-${match[2]}-${match[3]}`; // Format the matched parts with dashes
+        }
+
+        return phoneNumber;
+    }
 }
