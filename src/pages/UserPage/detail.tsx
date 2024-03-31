@@ -14,8 +14,6 @@ export default function UserDetailPage() {
         openModal: false
     })
 
-    console.log(params)
-
 
     useEffect(() => {
         const detailId = Object.values(params)[0]
