@@ -1,12 +1,14 @@
 'use client'
 
 import {DaisyUiBaseLayout, DaisyUiFooter, DaisyUiNavbarSidebar, DaisyUiContentPageLayout} from "@/components/DaisyUi";
-import DashboardPage from "@/pages/DashboardPage";
 import React from "react";
+import AttendancePage from "@/pages/AttendancePage";
+import UserPage from "@/pages/UserPage";
 
-export default function Dashboard() {
+export default function Page() {
+
     return (<>
-        <title>Dashboard</title>
+        <title>Users</title>
         {/* Base Layout */}
         <DaisyUiBaseLayout>
 
@@ -14,10 +16,10 @@ export default function Dashboard() {
             <DaisyUiNavbarSidebar/>
 
             {/* Content Page Layout */}
-            <DaisyUiContentPageLayout titlePage={"Dashboard"}>
+            <DaisyUiContentPageLayout titlePage={"Users"}>
 
                 {/* Page */}
-                <DashboardPage/>
+                <UserPage/>
 
             </DaisyUiContentPageLayout>
 
