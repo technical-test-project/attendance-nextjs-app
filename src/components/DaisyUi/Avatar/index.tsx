@@ -1,6 +1,7 @@
 import {UserCircleIcon} from "@heroicons/react/24/solid";
 import React from "react";
 import Image from "next/image";
+import {apiImageUrl} from "@/api/users";
 
 
 interface Props {
@@ -21,7 +22,7 @@ export default function DaisyUiComponent(props: Props) {
                           width={props.width}/>)
                 : (<UserCircleIcon
                     aria-hidden="true"
-                    className={props.className}
+                    className={"text-white"}
                     height={props.height}
                     width={props.width}/>)
         }

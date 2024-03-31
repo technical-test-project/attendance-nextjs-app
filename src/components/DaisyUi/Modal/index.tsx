@@ -35,6 +35,11 @@ export default function DaisyUiComponent(props: Props) {
     const handleOnConfirm = () => {
         setIsLoading(true)
         props.onConfirm()
+
+        const timeout = setTimeout(() => {
+            setIsLoading(false)
+        }, 2000)
+        return () => clearTimeout(timeout)
     }
 
     const handleOnClose = () => {

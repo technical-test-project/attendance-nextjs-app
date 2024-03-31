@@ -1,6 +1,14 @@
-import axiosInstance from "@/lib/axios";
+import axiosInstance, {BASE_URL} from "@/lib/axios";
 import StorageManager from "@/utils/storageManager";
 
+
+export const apiImageUrl = (filename: string | null | undefined, subfolder: string | null): string | null => {
+    let resultImageUrl = `${BASE_URL}/images/${filename}`
+    if (subfolder){
+        resultImageUrl += `/?subfolder=${subfolder}`
+    }
+    return filename ? resultImageUrl : null
+}
 
 export const apiProfile = async (): Promise<ResponseData> => {
     const response = await axiosInstance.get('/profile')
@@ -24,8 +32,8 @@ export const apiUpdateUser = async (userId: number, formData: FormData): Promise
     return response.data
 }
 
-export const apiUpdateUserProfile = async (userId: number, formData: FormData): Promise<ResponseData> => {
-    const response = await axiosInstance.patch(`/profile/${userId}/update`, formData, {
+export const apiUpdateUserProfile = async (formData: FormData): Promise<ResponseData> => {
+    const response = await axiosInstance.post(`/profile/update`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
