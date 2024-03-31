@@ -9,7 +9,7 @@ interface Props {
     onChange: EventHandlerInterface;
 }
 
-let debounce: number = 200
+let debounce: number = 500
 
 export default function DaisyUiTopPagination(props: Props) {
 
@@ -31,8 +31,8 @@ export default function DaisyUiTopPagination(props: Props) {
                     <DaisyUiSelect
                         id={"paginateSize"}
                         className="bordered border-white select-sm"
-                        // selectValue={props.table.getState().pagination.pageSize.toString()}
-                        items={[10, 20, 30, 50, 100]}
+                        defaultValue={props.table.getState().pagination.pageSize.toString()}
+                        items={[5, 10, 20, 30, 50, 100]}
                         onChange={(e: any) => {
                             props.table.setPageSize(Number(e.target.value))
                         }}/>

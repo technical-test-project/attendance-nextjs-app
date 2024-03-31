@@ -189,7 +189,7 @@ export default function UserEditPage() {
 
                         <div className="sm:col-span-4">
                             <DaisyUiSelect id={"positionId"} items={positionMap} label={"Jabatan"}
-                                           selectValue={userDetail?.position?.id}
+                                           defaultValue={userDetail?.position?.id}
                                            onChange={handleInput}/>
                         </div>
 
