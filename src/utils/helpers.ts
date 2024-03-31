@@ -30,7 +30,6 @@ export default class Helpers {
         return Object.values(groupedData);
     }
 
-
     static convertDate(date: string, format?: string): string {
 
         const defaultFormat = 'DD MMMM YYYY HH:mm:ss'

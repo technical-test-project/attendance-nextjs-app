@@ -34,8 +34,7 @@ export const apiUpdateUserProfile = async (formData: FormData): Promise<Response
 
 
 export const apiUsers = async (): Promise<ResponseData> => {
-    const response = await axiosInstance.get('/users'
-    )
+    const response = await axiosInstance.get('/users')
     return response.data
 }
 

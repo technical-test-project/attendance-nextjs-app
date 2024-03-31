@@ -77,9 +77,6 @@ export default function ProfilePage() {
         }
     }
 
-    console.log(globalState)
-
-
     return <>
         <DaisyUiModal isOpen={globalState.openModalUpdateProfile}
                       title={'Update Profile'}

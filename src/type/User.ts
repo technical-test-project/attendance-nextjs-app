@@ -7,7 +7,7 @@ type User = {
     updatedAt: string;
     profile: Profile;
     role: Role;
-    position: Position;
+    position?: Position | null;
     attendances: Attendance[];
     attendanceGroupByDates: AttendanceGroupByDate[];
 }

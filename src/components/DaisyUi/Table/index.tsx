@@ -6,16 +6,19 @@ import {
     Table
 } from "@tanstack/table-core";
 import {flexRender, useReactTable} from "@tanstack/react-table";
-import {DaisyUiPagination, DaisyUiTextInput} from "@/components/DaisyUi";
+import {DaisyUiButton, DaisyUiPagination} from "@/components/DaisyUi";
 import React, {useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
 
 
 interface Props {
     data?: any;
     columns?: any;
+    urlDetail?: string;
 }
 
 export default function DaisyUiComponent(props: Props) {
+    const router = useRouter()
     const [globalFilter, setGlobalFilter] = useState('')
 
     useEffect(() => {
@@ -32,10 +35,16 @@ export default function DaisyUiComponent(props: Props) {
                 index == 0 ? (
                     <span>{info.row.index + 1}</span>
                 ) : (
-                    <span>{info.getValue() ?? '-'}</span>
+                    // column.field !== 'action' ? info.getValue() : <><DaisyUiButton text={"Detail"} onClick={()=> console.log(`index`, data[info.row.index])}/></>
+                    column.field !== 'action' ? info.getValue() : <>
+                        <DaisyUiButton text={"Detail"} onClick={()=> {
+                            const id = data[info.row.index].id
+                            router.push(`/${props.urlDetail}/${id}`)
+                        }}/>
+                    </>
                 )
             ),
-            header: column.headerName
+            header: column.headerName,
         })
     })
 
