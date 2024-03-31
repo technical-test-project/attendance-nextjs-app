@@ -2,7 +2,7 @@ import React from "react";
 
 interface Props {
     id: string;
-    value?: any
+    selectValue?: any
     items: number[] | string[] | {id: number, value: string}[] | undefined;
     className?: string;
     label?: string;
@@ -25,8 +25,8 @@ export default function DaisyUiComponent(props: Props) {
                 onSelect={props.onSelect}>
             {props.items?.map((item, index) =>
                 (typeof item === 'object' && item !== null
-                        ? <option value={item.id} key={item.id} selected={item.id === props.value}>{item.value}</option>
-                        : <option value={item} key={item} selected={item === props.value}>{item}</option>
+                        ? <option value={item.id} key={item.id} selected={item.id === props.selectValue}>{item.value}</option>
+                        : <option value={item} key={item} selected={item === props.selectValue}>{item}</option>
                 )
             )}
         </select>

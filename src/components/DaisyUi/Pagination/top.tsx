@@ -31,7 +31,7 @@ export default function DaisyUiTopPagination(props: Props) {
                     <DaisyUiSelect
                         id={"paginateSize"}
                         className="bordered border-white select-sm"
-                        // value={props.table.getState().pagination.pageSize.toString()}
+                        // selectValue={props.table.getState().pagination.pageSize.toString()}
                         items={[10, 20, 30, 50, 100]}
                         onChange={(e: any) => {
                             props.table.setPageSize(Number(e.target.value))
