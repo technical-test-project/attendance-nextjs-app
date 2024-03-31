@@ -53,6 +53,8 @@ export default function UserDetailPage() {
     }
 
     return <>
+        <DaisyUiButton text={"Kembali"} className={"mb-4 mx-4"} onClick={()=> router.back()}/>
+
         <div className="card card-compact bg-base-300 shadow-xl mb-6 p-4">
             <div className="card-body">
                 <h2 className="card-title">Detail Pengguna</h2>
@@ -85,7 +87,7 @@ export default function UserDetailPage() {
 
                     <div className="sm:col-span-4">
                         <DaisyUiTextInput id={"position"} type={"text"} label={"Jabatan"}
-                                          defaultValue={userDetail?.position?.name}
+                                          defaultValue={userDetail?.position?.name ?? '-'}
                                           readOnly/>
                     </div>
 
