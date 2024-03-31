@@ -7,9 +7,8 @@ import Helpers from "@/utils/helpers";
 
 export default function UserEditPage() {
     const router = useRouter()
-    const params = useParams()
+    const params = useParams<{id: string}>()
     const [userDetail, setUserDetail] = useState<User>()
-    const [position, setPosition] = useState<Position[]>()
     const [positionMap, setPositionMap] = useState<{ id: number, value: string }[]>()
     const [globalState, setGlobalState] = useState({
         detailId: 0,

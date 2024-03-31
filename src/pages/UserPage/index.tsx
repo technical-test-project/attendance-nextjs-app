@@ -6,7 +6,6 @@ import {useRouter} from "next/navigation";
 
 export default function UserPage() {
     const router = useRouter()
-    const [error, setError] = useState(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [data, setData] = useState<any[]>();
     const [columns, setColumns] = useState<TableColumn[]>()
@@ -14,7 +13,7 @@ export default function UserPage() {
 
     useEffect(() => {
         fetchUsers()
-    })
+    },[])
 
     /**
      * Fetch Users
@@ -53,7 +52,7 @@ export default function UserPage() {
             setLoading(false)
 
         } catch (e: any) {
-            setError(e);
+            console.log(e)
         }
     }
 
@@ -63,7 +62,7 @@ export default function UserPage() {
             <div className="card-body">
                 <h2 className="card-title">Daftar Pengguna</h2>
 
-                <div className={"grid grid-cols-8 flex my-4"}>
+                <div className={"grid-cols-8 flex mt-4 mb-2"}>
                     <DaisyUiButton text={"+ Tambah"} className={"grid-cols-4"} onClick={() => {
                         router.push('/users/create')
                     }}/>
