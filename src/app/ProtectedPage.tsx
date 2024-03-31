@@ -3,7 +3,6 @@
 import React, {useEffect} from "react";
 import {usePathname, useRouter} from "next/navigation";
 import {apiProfile} from "@/api/users";
-import {router} from "next/client";
 
 interface Props {
     children: React.ReactNode
@@ -11,6 +10,7 @@ interface Props {
 
 
 export default function ProtectedPage(props: Props) {
+    const router = useRouter()
     const pathname = usePathname()
 
     useEffect(() => {
@@ -30,7 +30,6 @@ export default function ProtectedPage(props: Props) {
                 router.push('/login')
             }
         }
-
         checkAuth()
     }, [pathname])
 
