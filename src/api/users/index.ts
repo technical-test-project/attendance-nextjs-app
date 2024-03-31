@@ -38,6 +38,11 @@ export const apiUsers = async (): Promise<ResponseData> => {
     return response.data
 }
 
+export const apiUserDetail = async (userId: number): Promise<ResponseData> => {
+    const response = await axiosInstance.get(`/users/${userId}`)
+    return response.data
+}
+
 export const apiStoreUser = async (formData: FormData): Promise<ResponseData> =>  {
   const response = await axiosInstance.post('/users', formData, {
       headers: {

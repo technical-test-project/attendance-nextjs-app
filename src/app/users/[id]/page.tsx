@@ -1,13 +1,10 @@
 'use client'
 
-import {DaisyUiBaseLayout, DaisyUiFooter, DaisyUiNavbarSidebar, DaisyUiContentPageLayout} from "@/components/DaisyUi";
+import {DaisyUiBaseLayout, DaisyUiContentPageLayout, DaisyUiFooter, DaisyUiNavbarSidebar} from "@/components/DaisyUi";
 import React from "react";
-import UserDetailPage from "@/pages/users/[id]";
+import UserDetailPage from "@/pages/UserPage/detail";
 
 export default function Page() {
-
-
-    return <>Detail Page</>
 
     return (<>
         <title>Detail Users</title>

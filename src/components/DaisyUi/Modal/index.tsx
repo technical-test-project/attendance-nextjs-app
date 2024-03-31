@@ -52,7 +52,7 @@ export default function DaisyUiComponent(props: Props) {
         <dialog className="modal modal-bottom sm:modal-middle bg-black bg-opacity-50" open={props.isOpen}>
             <div className="modal-box">
                 <h3 className="font-bold text-xl">{props.title ?? 'Title'}</h3>
-                <small>Click the button {btnCloseText} to close</small>
+                {/*<small>Click the button {btnCloseText} to close</small>*/}
                 <p className="py-4">{props.message ?? 'Apakah anda yakin ingin melakukan aksi ini?'}</p>
                 <div className="modal-action gap-1.5">
 
